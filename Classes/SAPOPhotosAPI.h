@@ -14,30 +14,24 @@
 
 #pragma mark Complex Type Interface Definitions 
 
+@class AlbumGetListByUserResult;
+
 #pragma mark -
 #pragma mark Main WebService Interface
 @interface SAPOPhotosAPI : WebService
 {
 }
 
+- (void)setUsername:(NSString *)username password:(NSString *)password;
+
+- (NSString *) dummyEchoWithString:(NSString *)echoString;
+
 - (NSDictionary *) albumCreateWithAlbum:(NSDictionary *)album;
-- (NSDictionary *) albumGetListByUserWithUser:(NSDictionary *)user page:(NSInteger)page orderBy:(NSString *)orderBy interface:(NSString *)interface;
+- (AlbumGetListByUserResult *) albumGetListByUserWithUser:(NSDictionary *)user page:(NSInteger)page orderBy:(NSString *)orderBy interface:(NSString *)interface;
 
 - (NSDictionary *) imageAddToAlbumWithImage:(NSDictionary *)image interface:(NSString *)interface;
 - (NSDictionary *) imageCreateWithImage:(NSDictionary *)image interface:(NSString *)interface;
 - (NSDictionary *) imageDetailsWithImage:(NSDictionary *)image;
 - (NSDictionary *) imageEditWithImage:(NSDictionary *)image;
-
-- (NSDictionary *) imageGetByColorLikenessWithColor:(NSDictionary *)color interface:(NSString *)interface;
-- (NSDictionary *) imageGetListBySearchWithPage:(NSInteger)page interface:(NSString *)interface terms:(NSArray *)terms dateFrom:(NSString *)dateFrom dateTo:(NSString *)dateTo;
-- (NSDictionary *) imageGetListByTagsWithTags:(NSArray *)tags page:(NSInteger)page orderBy:(NSString *)orderBy m18:(BOOL)m18 user:(NSDictionary *)user interface:(NSString *)interface;
-- (NSDictionary *) imageGetListByUserWithPage:(NSInteger)page user:(NSDictionary *)user;
-- (NSDictionary *) imageGetListByUserAlbumWithUser:(NSDictionary *)user album:(NSDictionary *)album page:(NSInteger)page interface:(NSString *)interface orderBy:(NSString *)orderBy;
-
-- (NSDictionary *) userCreateWithUser:(NSDictionary *)user;
-- (NSDictionary *) userDetailsWithUser:(NSDictionary *)user interface:(NSDictionary *)interface;
-- (NSDictionary *) userGetTagsWithUser:(NSDictionary *)user interface:(NSString *)interface;
-
-- (NSString *) dummyEchoWithEchoStr:(NSString *)echoStr;
 
 @end

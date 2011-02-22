@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>SAPOFotosApertureExportPlugin</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.export.SAPOFotosApertureExportPlugin</string>
+	<string>pt.sapo.macos.ApertureExportPlugin</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -48,12 +48,12 @@
 			<string>616BA321-B4C2-49DF-8FD8-2E3392D2D240</string>
 			<key>helpURL</key>
 			<string>http://www.apple.com/aperture/</string>
+			<key>infoString</key>
+			<string>infoString</string>
 			<key>protocolNames</key>
 			<array>
 				<string>ApertureExportPlugIn</string>
 			</array>
-			<key>infoString</key>
-			<string>infoString</string>
 			<key>uuid</key>
 			<string>4CD78730-E22D-4AC5-93E9-84936D9CE835</string>
 		</dict>

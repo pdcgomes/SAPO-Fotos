@@ -1,43 +1,23 @@
 //
-//	SAPOFotosApertureExportPlugin.m
-//	SAPOFotosApertureExportPlugin
+//  AbstractExportPlugin.m
+//  SAPOFotosApertureExportPlugin
 //
-//	Created by Pedro Gomes on 2/15/11.
-//	Copyright SAPO 2011. All rights reserved.
+//  Created by Pedro Gomes on 2/22/11.
+//  Copyright 2011 SAPO. All rights reserved.
 //
 
-#import "SAPOFotosApertureExportPlugin.h"
+#import "AbstractExportPlugin.h"
 #import "SAPOPhotosAPI.h"
 #import "PhotoUploadOperation.h"
 #import "AlbumGetListByUserResult.h"
 
-#define kSession_IsAuthenticatingKey	@"isPerformingAuthentication"
-#define kSession_IsAuthenticatedKey		@"isAuthenticated"
-
-@interface SAPOFotosApertureExportPlugin(Private)
-
-- (void)authenticateAndRetrieveAlbums;
-
-- (void)finishExportIfCompletedOrCanceled;
-- (void)deleteTemporaryFiles;
-
-@end
-
-@implementation SAPOFotosApertureExportPlugin
+@implementation AbstractExportPlugin
 
 @synthesize session;
 @synthesize albums;
 
-//---------------------------------------------------------
-// initWithAPIManager:
-//
-// This method is called when a plug-in is first loaded, and
-// is a good point to conduct any checks for anti-piracy or
-// system compatibility. This is also your only chance to
-// obtain a reference to Aperture's export manager. If you
-// do not obtain a valid reference, you should return nil.
-// Returning nil means that a plug-in chooses not to be accessible.
-//---------------------------------------------------------
+#pragma mark -
+#pragma mark Dealloc and Initialization
 
 - (void)dealloc
 {
@@ -54,51 +34,33 @@
 	// Release the top-level objects from the nib.
 	[_topLevelNibObjects makeObjectsPerformSelector:@selector(release)];
 	[_topLevelNibObjects release];
-	
-	[_progressLock release];
-	[_exportManager release];
+	[_nibName release];
 	
 	[super dealloc];
-}
-
- - (id)initWithAPIManager:(id<PROAPIAccessing>)apiManager
-{
-	if ((self = [super init])) {
-		_apiManager	= apiManager;
-		_exportManager = [[_apiManager apiForProtocol:@protocol(ApertureExportManager)] retain];
-		if (!_exportManager)
-			return nil;
-		
-		_progressLock = [[NSLock alloc] init];
-		
-		session = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-				   [NSNumber numberWithBool:NO], kSession_IsAuthenticatedKey, 
-				   [NSNumber numberWithBool:NO], kSession_IsAuthenticatingKey, 
-				   nil];
-		
-		if(!operationQueue) {
-			operationQueue = [[NSOperationQueue alloc] init];
-			[operationQueue setMaxConcurrentOperationCount:5]; // TODO: define a constant 
-		}
-	}
-	
-	return self;
 }
 
 #pragma mark -
 #pragma mark UI Methods
 
+- (id)initWithNibName:(NSString *)nibName
+{
+	if((self = [super init])) {
+		_nibName = [nibName copy];
+	}
+	return self;
+}
+
 - (NSView *)settingsView
 {
-	if (nil == settingsView) {
+	if(nil == settingsView) {
 		// Load the nib using NSNib, and retain the array of top-level objects so we can release
 		// them properly in dealloc
-		NSBundle *myBundle = [NSBundle bundleForClass:[self class]];
-		NSNib *myNib = [[NSNib alloc] initWithNibNamed:@"ExportView" bundle:myBundle];
-		if ([myNib instantiateNibWithOwner:self topLevelObjects:&_topLevelNibObjects]) {
+		NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
+		NSNib *mainNib = [[NSNib alloc] initWithNibNamed:_nibName bundle:mainBundle];
+		if ([mainNib instantiateNibWithOwner:self topLevelObjects:&_topLevelNibObjects]) {
 			[_topLevelNibObjects retain];
 		}
-		[myNib release];
+		[mainNib release];
 	}
 	
 	return settingsView;
@@ -120,34 +82,6 @@
 }
 
 - (void)willBeDeactivated
-{
-	
-}
-
-#pragma mark
-#pragma mark Aperture UI Controls
-
-- (BOOL)allowsOnlyPlugInPresets
-{
-	return NO;	
-}
-
-- (BOOL)allowsMasterExport
-{
-	return YES;	
-}
-
-- (BOOL)allowsVersionExport
-{
-	return YES;	
-}
-
-- (BOOL)wantsFileNamingControls
-{
-	return YES;	
-}
-
-- (void)exportManagerExportTypeDidChange
 {
 	
 }
@@ -187,17 +121,7 @@
 		exportedImagePaths = [[NSMutableArray alloc] initWithCapacity:1];
 	}
 	
-	[self lockProgress];
-	exportProgress = (ApertureExportProgress){
-		.currentValue = 0.0,
-		.totalValue = 1.0,
-		.message = nil,
-		.indeterminateProgress = NO,
-	};
-	[self unlockProgress];
-	
 	// You must call [_exportManager shouldBeginExport] here or elsewhere before Aperture will begin the export process
-	[_exportManager shouldBeginExport];
 }
 
 - (void)exportManagerWillBeginExportToPath:(NSString *)path
@@ -232,11 +156,12 @@
 	
 	NSString *imagePath = [[@"~/Pictures/Aperture Exports" stringByExpandingTildeInPath] stringByAppendingPathComponent:relativePath];
 	TRACE(@"relativePath <%@> forIndex: %d", imagePath, index);
-
+	
 	NSDictionary *selectedAlbum = [[albumController arrangedObjects] objectAtIndex:[albumController selectionIndex]];
 	NSString *tags = [[tagsTokenField stringValue] copy];
 	
-	NSDictionary *imageProperties = [_exportManager propertiesWithoutThumbnailForImageAtIndex:index];
+//	NSDictionary *imageProperties = [_exportManager propertiesWithoutThumbnailForImageAtIndex:index];
+	NSDictionary *imageProperties = nil;
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  [usernameTextField stringValue], @"username",
 							  [passwordTextField stringValue], @"password",
@@ -247,7 +172,7 @@
 	[uploadOperation setDelegate:self];
 	[uploadOperations addObject:uploadOperation];
 	[operationQueue addOperation:uploadOperation];
-
+	
 	[uploadOperation release];
 	[tags release];
 }
@@ -255,7 +180,7 @@
 - (void)exportManagerDidFinishExport
 {
 	TRACE(@"***** exportManagerDidFinishExport *****");
-
+	
 	// You must call [_exportManager shouldFinishExport] before Aperture will put away the progress window and complete the export.
 	// NOTE: You should assume that your plug-in will be deallocated immediately following this call. Be sure you have cleaned up
 	// any callbacks or running threads before calling.
@@ -269,7 +194,7 @@
 	exportCanceled = YES;
 	[operationQueue cancelAllOperations];
 	[self finishExportIfCompletedOrCanceled];
-
+	
 	// You must call [_exportManager shouldCancelExport] here or elsewhere before Aperture will cancel the export process
 	// NOTE: You should assume that your plug-in will be deallocated immediately following this call. Be sure you have cleaned up
 	// any callbacks or running threads before calling.
@@ -278,23 +203,6 @@
 #pragma mark -
 #pragma mark Progress Methods
 
-- (ApertureExportProgress *)progress
-{
-	return &exportProgress;
-}
-
-- (void)lockProgress
-{
-	if (!_progressLock)
-		_progressLock = [[NSLock alloc] init];
-		
-	[_progressLock lock];
-}
-
-- (void)unlockProgress
-{
-	[_progressLock unlock];
-}
 
 #pragma mark -
 #pragma mark PhotoUploadOperationDelegate
@@ -322,11 +230,11 @@
 {
 	TRACE(@"Upload operation for photo <%@> reported progress: [%@]", operation, progress);
 	
-	[self lockProgress];
-	
-	exportProgress.currentValue = [progress longValue];
-	
-	[self unlockProgress];
+//	[self lockProgress];
+//	
+//	exportProgress.currentValue = [progress longValue];
+//	
+//	[self unlockProgress];
 }
 
 #pragma mark -
@@ -338,25 +246,25 @@
 }
 
 #pragma mark -
-#pragma mark Private Methods
+#pragma mark Protected Methods
 
 - (void)authenticateAndRetrieveAlbums
 {
 	NSString *username = [[usernameTextField stringValue] copy];
 	NSString *password = [[passwordTextField stringValue] copy];
 	
-//	if(![[NSUserDefaults standardUserDefaults] boolForKey:UserDefaults_DisableKeychainUsage]) {
-//		EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:Keychain_ServiceName withUsername:username];
-//		if(!keychainItem) {
-//			keychainItem = [EMGenericKeychainItem addGenericKeychainItemForService:Keychain_ServiceName withUsername:username password:password];
-//			if(!keychainItem) {
-//				ERROR(@"Unable to store the credentials in the Keychain");
-//			}
-//		}
-//		else if(![password isEqualToString:keychainItem.password]) {
-//			keychainItem.password = password;
-//		}
-//	}
+	//	if(![[NSUserDefaults standardUserDefaults] boolForKey:UserDefaults_DisableKeychainUsage]) {
+	//		EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:Keychain_ServiceName withUsername:username];
+	//		if(!keychainItem) {
+	//			keychainItem = [EMGenericKeychainItem addGenericKeychainItemForService:Keychain_ServiceName withUsername:username password:password];
+	//			if(!keychainItem) {
+	//				ERROR(@"Unable to store the credentials in the Keychain");
+	//			}
+	//		}
+	//		else if(![password isEqualToString:keychainItem.password]) {
+	//			keychainItem.password = password;
+	//		}
+	//	}
 	
 	
 	[self willChangeValueForKey:@"albums"];
@@ -371,7 +279,7 @@
 		SAPOPhotosAPI *client = [[SAPOPhotosAPI alloc] init];
 		[client setUsername:username password:password];
 		AlbumGetListByUserResult *result = [client albumGetListByUserWithUser:nil page:0 orderBy:nil interface:nil];
-
+		
 		TRACE(@"Auth result: %@", result);
 		
 		BOOL authSuccess = ([result.albums count] > 0);
@@ -387,7 +295,7 @@
 		
 		[session setObject:[NSNumber numberWithBool:authSuccess] forKey:kSession_IsAuthenticatedKey];
 		[session setObject:[NSNumber numberWithBool:NO] forKey:kSession_IsAuthenticatingKey];
-
+		
 		[client release];
 	}];
 	[operationQueue addOperation:operation];
@@ -408,12 +316,22 @@
 	[self deleteTemporaryFiles];
 	if(exportCanceled) {
 		TRACE(@"***** CANCELING EXPORT...");
-		[_exportManager shouldCancelExport];
+		[self cancelExport];
 	}
 	else {
 		TRACE(@"***** FISNISHING EXPORT...");
-		[_exportManager shouldFinishExport];
+		[self finishExport];
 	}
+}
+
+- (void)cancelExport
+{
+	TRACE(@"***** SUBCLASSES MUST IMPLEMENT THIS METHOD *****");
+}
+
+- (void)finishExport
+{
+	TRACE(@"***** SUBCLASSES MUST IMPLEMENT THIS METHOD *****");
 }
 
 - (void)deleteTemporaryFiles

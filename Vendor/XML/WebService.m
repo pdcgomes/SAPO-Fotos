@@ -11,7 +11,29 @@
 #import "NSString+Helpers.h"
 #import "NSDataAdditions.h"
 
+@interface WebService(Private)
+
+- (void)appendParameter:(id)parameter toEnvelope:(NSMutableString *)envelope;
+
+@end
+
 @implementation WebService
+
+- (void)dealloc
+{
+	[SOAPHeader release];
+	[SOAPHeaderNamespaces release];
+	[super dealloc];
+}
+
+- (id)init
+{
+	if((self = [super init])) {
+		SOAPHeader = [[NSMutableDictionary alloc] init];
+		SOAPHeaderNamespaces = [[NSMutableDictionary alloc] init];
+	}
+	return self;
+}
 
 #pragma mark Conversions
 
@@ -85,7 +107,6 @@
 
 - (NSURLRequest *) makeSOAPRequestWithLocation:(NSString *)url Parameters:(NSArray *)parameters Operation:(NSString *)operation Namespace:(NSString *)namespace Action:(NSString *)action SOAPVersion:(SOAPVersion)soapVersion;
 {
-	
 	NSMutableString *envelope = [NSMutableString string];
 	
 	[envelope appendString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"];
@@ -98,32 +119,53 @@
 			[envelope appendString:@"<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\">\n"];
 			break;
 	}
-	[envelope appendString:@"<soap:Body>\n"];
-
-	[envelope appendFormat:@"<%@ xmlns=\"%@\">\n", operation, namespace];
-
 	
-	for (NSDictionary *oneParameter in parameters)
-	{
+	if(SOAPHeader) {
+		[envelope appendString:@"<soap:Header>"];
+		
+		for(NSString *headerElement in [SOAPHeader allKeys]) {
+			NSString *headerNamespace = [SOAPHeaderNamespaces objectForKey:headerElement];
+			NSAssert(headerNamespace != nil, SKStringWithFormat(@"Undeclared namespace for SOAPHeader element <%@>", headerElement));
+			[envelope appendFormat:@"<%@ xmlns=\"%@\">\n", headerElement, headerNamespace];
+
+			NSDictionary *child = [SOAPHeader objectForKey:headerElement];
+			for(NSString *childKey in [child allKeys]) {
+				[envelope appendFormat:@"<%1$@>%2$@</%1$@>\n", childKey, [child objectForKey:childKey]];
+			}
+			
+			[envelope appendFormat:@"</%@>\n", headerElement];
+		}
+		
+		[envelope appendString:@"</soap:Header>"];
+	}
+	
+	[envelope appendString:@"<soap:Body>\n"];
+	
+	[envelope appendFormat:@"<%@ xmlns=\"%@\">\n", operation, namespace];
+	
+
+	for (NSDictionary *oneParameter in parameters) {
 		NSObject *value = [oneParameter objectForKey:@"value"];
 		NSString *parameterName = [[oneParameter objectForKey:@"name"] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_"]];
-		
-		[envelope appendFormat:@"<%@>%@</%@>\n", parameterName, [[value description] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding], parameterName];
-	}			
-	
+
+		[envelope appendFormat:@"<%@>", parameterName];
+		[self appendParameter:value toEnvelope:envelope];
+		[envelope appendFormat:@"</%@>\n", parameterName];
+	}
+
 	[envelope appendFormat:@"</%@>\n", operation];
 	[envelope appendString:@"</soap:Body>\n"];
 	[envelope appendString:@"</soap:Envelope>\n"];
-
+	
 	//NSLog(@"%@", parameters);
 	//NSLog(@"%@", envelope);
-
-#if LOG_WEBSERVICE_REQUESTS == 1
+	
+//#if LOG_WEBSERVICE_REQUESTS == 1
 	TRACE(@"Webservice request: SOAPAction <%@>:\n"
 		  @"***** SOAP ENVELOPE START *****\n"
 		  @"%@\n"
 		  @"***** SOAP ENVELOPE END *****", action, envelope);
-#endif
+//#endif
 	
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]] autorelease];
 	
@@ -135,7 +177,33 @@
 	NSData *postBody = [NSData dataWithData:[envelope dataUsingEncoding:NSUTF8StringEncoding]];
 	[request setHTTPBody:postBody];
 	
-	return request;
+	return request;	
+}
+
+- (void)appendParameter:(id)parameter toEnvelope:(NSMutableString *)envelope
+{
+	if([parameter isKindOfClass:[NSString class]]) {
+		[envelope appendString:[parameter stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	}
+	else if([parameter isKindOfClass:[NSDictionary class]]) {
+		for(NSString *key in [parameter allKeys]) {
+			NSObject *value = [parameter objectForKey:key];
+			
+			[envelope appendFormat:@"\n<%@>", key];
+			[self appendParameter:value toEnvelope:envelope];
+			[envelope appendFormat:@"</%@>\n", key];
+	
+		}
+	}
+	else if([parameter isKindOfClass:[NSArray class]]) {
+		for(id object in parameter) {
+			[self appendParameter:object toEnvelope:envelope];
+		}
+	}
+	else {
+		WARN(@"***** UNSUPPORTED CLASS TYPE FOR PARAMETER <%@>", parameter);
+	}
+
 }
 
 - (NSString *) returnValueFromSOAPResponse:(XMLdocument *)envelope

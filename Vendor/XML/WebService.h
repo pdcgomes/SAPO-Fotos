@@ -13,8 +13,10 @@
 
 typedef enum { SOAPVersionNone = 0, SOAPVersion1_0 = 1, SOAPVersion1_2 = 2 } SOAPVersion;
 
-@interface WebService : NSObject {
-
+@interface WebService : NSObject 
+{
+	NSMutableDictionary *SOAPHeader;
+	NSMutableDictionary *SOAPHeaderNamespaces;
 }
 
 - (NSURLRequest *) makeGETRequestWithLocation:(NSString *)url Parameters:(NSDictionary *)parameters;

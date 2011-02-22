@@ -23,7 +23,7 @@
 #define LOG_LEVEL_ERROR	3
 #define LOG_LEVEL_FATAL	4
 
-#ifdef DEBUGLOG
+#ifdef DEBUG
 #define LOG(LEVEL, ...)	NSLog(@"%s: %s %@", #LEVEL, __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
 #else
 #define LOG(LEVEL, ...) /* */

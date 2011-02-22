@@ -4,4 +4,6 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+	#import "Macros.h"
+	#import "Logging.h"
 #endif
