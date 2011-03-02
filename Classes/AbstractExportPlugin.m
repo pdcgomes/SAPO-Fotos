@@ -185,15 +185,8 @@
 	return YES;	
 }
 
-//
-//- (void)exportManagerDidWriteImageDataToRelativePath:(NSString *)relativePath forImageAtIndex:(unsigned)index
 - (void)exportImageWithPath:(NSString *)imagePath
 {
-	//[exportedImagePaths addObject:imagePathName];
-	
-//	NSString *imagePath = [[@"~/Pictures/Aperture Exports" stringByExpandingTildeInPath] stringByAppendingPathComponent:relativePath];
-//	TRACE(@"relativePath <%@> forIndex: %d", imagePath, index);
-	
 	NSDictionary *selectedAlbum = [[albumController arrangedObjects] objectAtIndex:[albumController selectionIndex]];
 	NSString *tags = [[tagsTokenField stringValue] copy];
 	
@@ -443,7 +436,7 @@
 	}
 	[NSApp endSheet:progressController.window];
 	
-	if([failedOperations count] > 0) {
+	if([failedOperations count] > 0 && !exportCanceled) {
 		TRACE(@"***** FOUND FAILED OPERATIONS. PROMPTING USER FOR ACTION...");
 		NSAlert *alert = [NSAlert alertWithMessageText:@"Warning" 
 										 defaultButton:@"No" 
