@@ -147,6 +147,7 @@
 	[session setObject:[NSNumber numberWithDouble:0] forKey:kSession_CurrentProgressKey];
 	
 	progressController = [[ProgressSheetController alloc] initWithWindowNibName:@"ProgressSheet"];
+	progressController.delegate = self;
 	progressController.maxProgress = 100.0;
 	progressController.numberOfImages = [self numberOfImages];
 	[NSApp beginSheet:progressController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(progressSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
@@ -239,6 +240,27 @@
 #pragma mark -
 #pragma mark Progress Methods
 
+#pragma mark -
+#pragma mark Actions
+
+- (void)loginButtonPressed:(id)sender
+{
+	[self authenticateAndRetrieveAlbums];
+}
+
+- (IBAction)createAlbumButtonPressed:(id)sender
+{
+	TRACE(@"");
+	createAlbumController = [[CreateAlbumSheetController alloc] initWithWindowNibName:@"CreateAlbumSheet"];
+	createAlbumController.delegate = self;
+	[NSApp beginSheet:createAlbumController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(createAlbumSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];	
+}
+
+- (void)createAlbumSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet orderOut:self];
+	SKSafeRelease(createAlbumController);
+}
 
 #pragma mark -
 #pragma mark PhotoUploadOperationDelegate
@@ -291,28 +313,6 @@
 }
 
 #pragma mark -
-#pragma mark Actions
-
-- (void)loginButtonPressed:(id)sender
-{
-	[self authenticateAndRetrieveAlbums];
-}
-
-- (IBAction)createAlbumButtonPressed:(id)sender
-{
-	TRACE(@"");
-	createAlbumController = [[CreateAlbumSheetController alloc] initWithWindowNibName:@"CreateAlbumSheet"];
-	createAlbumController.delegate = self;
-	[NSApp beginSheet:createAlbumController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(createAlbumSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];	
-}
-
-- (void)createAlbumSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	[sheet orderOut:self];
-	SKSafeRelease(createAlbumController);
-}
-
-#pragma mark -
 #pragma mark CreateAlbumControllerDelegate
 
 - (BOOL)createAlbumController:(CreateAlbumSheetController *)controller requestedAlbumCreation:(NSDictionary *)album
@@ -332,19 +332,24 @@
 		NSDictionary *result = [client albumCreateWithAlbum:createAlbumParams];
 		if([[result objectForKey:@"ok"] isEqualToString:@"true"]) {
 			TRACE(@"Album creation succeeded!");
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[NSApp endSheet:controller.window];
+				[self authenticateAndRetrieveAlbums];
+			});
 		}
 		else {
 			TRACE(@"Album creation failed!");
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[NSApp endSheet:controller.window];
+				NSAlert *alert = [NSAlert alertWithMessageText:@"" 
+												 defaultButton:@"OK" 
+											   alternateButton:nil 
+												   otherButton:nil 
+									 informativeTextWithFormat:@"We were unable to create the album at this time.\nPlease try again later."];
+				[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(createAlbumFailedAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+			});
 		}
 		[client release];
-		
-//		dispatch_queue_t mainQueue = dispatch_get_main_queue();
-//		dispatch_sync(mainQueue, ^{
-//			[NSApp endSheet:controller.window];
-//			[self authenticateAndRetrieveAlbums];
-//		});
-		[NSApp performSelectorOnMainThread:@selector(endSheet:) withObject:controller.window waitUntilDone:NO];
-		[self performSelectorOnMainThread:@selector(authenticateAndRetrieveAlbums) withObject:nil waitUntilDone:NO];
 	}];
 	[operationQueue addOperation:operation];
 	
@@ -353,6 +358,19 @@
 	[password release];
 	
 	return YES;
+}
+
+- (void)createAlbumFailedAlertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[[alert window] orderOut:self];
+}
+
+#pragma mark -
+#pragma mark ProgressSheetControllerDelegate
+
+- (void)progressSheetControllerCanceled:(ProgressSheetController *)controller
+{
+	[operationQueue cancelAllOperations];
 }
 
 #pragma mark -

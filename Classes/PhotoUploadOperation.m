@@ -116,7 +116,7 @@
 	NSRunLoop *runLoop = [[NSRunLoop currentRunLoop] retain];
 	
 	while(uploading && ![self isCancelled]) {
-		[runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+		[runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]];
 	}
 	
 	[runLoop release];

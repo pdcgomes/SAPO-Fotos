@@ -14,12 +14,23 @@
 @synthesize numberOfImages;
 @synthesize maxProgress;
 @synthesize progress;
+@synthesize delegate;
 
 - (void)awakeFromNib
 {
 	numberOfImages	= 0;
 	maxProgress		= 0;
 	progress		= 0;
+}
+
+- (IBAction)cancel:(id)sender
+{
+	[(NSControl *)sender setEnabled:NO];
+	[textField setStringValue:NSLocalizedString(@"Canceling export...", @"")];
+	
+	if([self.delegate respondsToSelector:@selector(progressSheetControllerCanceled:)]) {
+		[self.delegate progressSheetControllerCanceled:self];
+	}
 }
 
 @end

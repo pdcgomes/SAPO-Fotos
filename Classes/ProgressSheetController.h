@@ -11,14 +11,26 @@
 
 @interface ProgressSheetController : NSWindowController 
 {
-	NSUInteger	numberOfImages;
-	double		maxProgress;	
-	double		progress;
+	IBOutlet NSTextField	*textField;
 
+	NSUInteger				numberOfImages;
+	double					maxProgress;	
+	double					progress;
+	
+	NSObject				*delegate;
 }
 
 @property (nonatomic, assign) NSUInteger numberOfImages;
 @property (nonatomic, assign) double maxProgress;
 @property (nonatomic, assign) double progress;
+@property (nonatomic, assign) NSObject *delegate;
+
+- (IBAction)cancel:(id)sender;
+
+@end
+
+@interface NSObject(ProgressSheetControllerDelegate)
+
+- (void)progressSheetControllerCanceled:(ProgressSheetController *)controller;
 
 @end
