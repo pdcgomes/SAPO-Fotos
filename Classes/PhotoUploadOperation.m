@@ -133,6 +133,10 @@
 
 - (BOOL)loadImage
 {
+	if([self isCancelled]) {
+		return YES;
+	}
+	
 	if(![self checkImageFileExists]) {
 		return NO;
 	}
@@ -148,6 +152,9 @@
 
 - (BOOL)requestUploadToken
 {
+	if([self isCancelled]) {
+		return YES;
+	}
 	NSAssert(imageData != nil && [imageData length] > 0, @"Image data is nil or zero-length.");
 	
 	TRACE(@"***** REQUESTING UPLOAD TOKEN FOR <%@>... *****", [imagePath lastPathComponent]);
@@ -191,6 +198,10 @@
 
 - (void)uploadImage
 {
+	if([self isCancelled]) {
+		return;
+	}
+	
 	NSAssert(token != nil, @"The upload token in unexpectedly nil!");
 	NSAssert(imageData != nil && [imageData length] > 0, @"Image data is nil or zero-length.");
 	
