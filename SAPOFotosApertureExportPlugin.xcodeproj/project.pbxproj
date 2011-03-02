@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D570F4A1313DD4700CEA167 /* ExportView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0D570F461313DD4700CEA167 /* ExportView.nib */; };
-		0D570F4C1313DD5400CEA167 /* iPhotoExportView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0D570F481313DD4700CEA167 /* iPhotoExportView.nib */; };
+		0D570F4C1313DD5400CEA167 /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0D570F481313DD4700CEA167 /* Panel.nib */; };
 		0D570F6A1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
 		0D570F6B1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
 		0D570F751313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F711313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m */; };
@@ -29,6 +29,8 @@
 		0D570FA01313DFD300CEA167 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE9C494130AF6A5001A8CE2 /* Security.framework */; };
 		0D570FA11313DFD400CEA167 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		0D570FA21313DFD400CEA167 /* PluginManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D15DEA490ABF639500CBE3A5 /* PluginManager.framework */; };
+		0DA78DAB1314077100DC6DD3 /* ExportPluginBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA78DAA1314077100DC6DD3 /* ExportPluginBox.m */; };
+		0DA78DAC1314077100DC6DD3 /* ExportPluginBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA78DAA1314077100DC6DD3 /* ExportPluginBox.m */; };
 		0DDF932E130AC4DD00C5F31A /* NSArray+XMLelement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF931F130AC4DD00C5F31A /* NSArray+XMLelement.m */; };
 		0DDF932F130AC4DD00C5F31A /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9321130AC4DD00C5F31A /* NSDataAdditions.m */; };
 		0DDF9330130AC4DD00C5F31A /* NSDate+xml.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9323130AC4DD00C5F31A /* NSDate+xml.m */; };
@@ -40,6 +42,54 @@
 		0DDF9349130AC57400C5F31A /* SAPOPhotosAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9348130AC57400C5F31A /* SAPOPhotosAPI.m */; };
 		0DDF93A2130ACAB100C5F31A /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93A1130ACAB100C5F31A /* PhotoUploadOperation.m */; };
 		0DDF93C1130ADA2600C5F31A /* EMKeychainItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93C0130ADA2600C5F31A /* EMKeychainItem.m */; };
+		0DE8F36D131550E10039B92A /* ProgressSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F36C131550E10039B92A /* ProgressSheet.xib */; };
+		0DE8F36E131550E10039B92A /* ProgressSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F36C131550E10039B92A /* ProgressSheet.xib */; };
+		0DE8F405131560D10039B92A /* ProgressSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8F404131560D10039B92A /* ProgressSheetController.m */; };
+		0DE8F406131560D10039B92A /* ProgressSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8F404131560D10039B92A /* ProgressSheetController.m */; };
+		0DE8F5221315840C0039B92A /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
+		0DE8F5231315840C0039B92A /* SAPOPhotosAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9348130AC57400C5F31A /* SAPOPhotosAPI.m */; };
+		0DE8F5241315840D0039B92A /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93A1130ACAB100C5F31A /* PhotoUploadOperation.m */; };
+		0DE8F525131584160039B92A /* EMKeychainItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93C0130ADA2600C5F31A /* EMKeychainItem.m */; };
+		0DE8F5261315841A0039B92A /* NSArray+XMLelement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF931F130AC4DD00C5F31A /* NSArray+XMLelement.m */; };
+		0DE8F5271315841A0039B92A /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9321130AC4DD00C5F31A /* NSDataAdditions.m */; };
+		0DE8F5281315841B0039B92A /* NSDate+xml.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9323130AC4DD00C5F31A /* NSDate+xml.m */; };
+		0DE8F5291315841C0039B92A /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9325130AC4DD00C5F31A /* NSString+Helpers.m */; };
+		0DE8F52A1315841C0039B92A /* WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9327130AC4DD00C5F31A /* WebService.m */; };
+		0DE8F52B1315841D0039B92A /* WSDLdocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9329130AC4DD00C5F31A /* WSDLdocument.m */; };
+		0DE8F52C1315841D0039B92A /* XMLdocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF932B130AC4DD00C5F31A /* XMLdocument.m */; };
+		0DE8F52D1315841E0039B92A /* XMLelement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF932D130AC4DD00C5F31A /* XMLelement.m */; };
+		0DE8F52E1315843C0039B92A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE9C494130AF6A5001A8CE2 /* Security.framework */; };
+		0DE8F52F1315843C0039B92A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		0DE8F5301315843D0039B92A /* PluginManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D15DEA490ABF639500CBE3A5 /* PluginManager.framework */; };
+		0DE8F539131585000039B92A /* IPHSAPOFotosPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8F538131585000039B92A /* IPHSAPOFotosPlugin.m */; };
+		0DE8F54B131589760039B92A /* sl-icon_sapofotos.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F548131589760039B92A /* sl-icon_sapofotos.tiff */; };
+		0DE8F54C131589760039B92A /* sl-icon-small_sapofotos.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F549131589760039B92A /* sl-icon-small_sapofotos.tiff */; };
+		0DE8F54D131589760039B92A /* tools_org-publish_sapofotos.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F54A131589760039B92A /* tools_org-publish_sapofotos.tiff */; };
+		0DE8F6A71316A5E60039B92A /* IPH-SAPOFotosSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F6A61316A5E60039B92A /* IPH-SAPOFotosSettings.xib */; };
+		0DE8F6BD1316A7090039B92A /* IPHSAPOFotosSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8F6BC1316A7090039B92A /* IPHSAPOFotosSettingsController.m */; };
+		0DE8F8041316C4FF0039B92A /* PluginManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D15DEA490ABF639500CBE3A5 /* PluginManager.framework */; };
+		0DE8F8051316C5000039B92A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		0DE8F8061316C5000039B92A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE9C494130AF6A5001A8CE2 /* Security.framework */; };
+		0DE8F8081316C5060039B92A /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE8F8071316C5060039B92A /* GHUnit.framework */; };
+		0DE8F80B1316C5120039B92A /* NSArray+XMLelement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF931F130AC4DD00C5F31A /* NSArray+XMLelement.m */; };
+		0DE8F80C1316C5130039B92A /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9321130AC4DD00C5F31A /* NSDataAdditions.m */; };
+		0DE8F80D1316C5130039B92A /* NSDate+xml.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9323130AC4DD00C5F31A /* NSDate+xml.m */; };
+		0DE8F80E1316C5140039B92A /* NSString+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9325130AC4DD00C5F31A /* NSString+Helpers.m */; };
+		0DE8F80F1316C5150039B92A /* WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9327130AC4DD00C5F31A /* WebService.m */; };
+		0DE8F8101316C5160039B92A /* WSDLdocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9329130AC4DD00C5F31A /* WSDLdocument.m */; };
+		0DE8F8111316C5160039B92A /* XMLdocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF932B130AC4DD00C5F31A /* XMLdocument.m */; };
+		0DE8F8121316C5170039B92A /* XMLelement.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF932D130AC4DD00C5F31A /* XMLelement.m */; };
+		0DE8F8131316C51A0039B92A /* EMKeychainItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93C0130ADA2600C5F31A /* EMKeychainItem.m */; };
+		0DE8F8141316C5230039B92A /* ExportPluginBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA78DAA1314077100DC6DD3 /* ExportPluginBox.m */; };
+		0DE8F8151316C52D0039B92A /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93A1130ACAB100C5F31A /* PhotoUploadOperation.m */; };
+		0DE8F8161316C52D0039B92A /* SAPOPhotosAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9348130AC57400C5F31A /* SAPOPhotosAPI.m */; };
+		0DE8F8171316C52E0039B92A /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
+		0DE8F8231316C5660039B92A /* GHUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8F8211316C5660039B92A /* GHUnitTestMain.m */; };
+		0DE8F8241316C5660039B92A /* PhotoUploadOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8F8221316C5660039B92A /* PhotoUploadOperationTest.m */; };
+		0DE8FF9B131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8FF9A131E5FD80039B92A /* CreateAlbumSheet.xib */; };
+		0DE8FF9C131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8FF9A131E5FD80039B92A /* CreateAlbumSheet.xib */; };
+		0DE8FFA6131E62170039B92A /* CreateAlbumSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */; };
+		0DE8FFA7131E62170039B92A /* CreateAlbumSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */; };
 		0DE9C495130AF6A5001A8CE2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE9C494130AF6A5001A8CE2 /* Security.framework */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -51,10 +101,10 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		0D570F3D1313DD2000CEA167 /* iPhotoExportPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iPhotoExportPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D570F3D1313DD2000CEA167 /* SAPOFotosExporter.iPhotoExporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAPOFotosExporter.iPhotoExporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D570F3E1313DD2000CEA167 /* iPhotoExportPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPhotoExportPlugin-Info.plist"; sourceTree = "<group>"; };
 		0D570F471313DD4700CEA167 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../../Projects/SAPOFotosApertureExportPlugin/English.lproj/ExportView.nib; sourceTree = SOURCE_ROOT; };
-		0D570F491313DD4700CEA167 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../../Projects/SAPOFotosApertureExportPlugin/English.lproj/iPhotoExportView.nib; sourceTree = SOURCE_ROOT; };
+		0D570F491313DD4700CEA167 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Panel.nib; sourceTree = "<group>"; };
 		0D570F521313DDB700CEA167 /* ExportPlugin_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExportPlugin_Prefix.pch; path = ../../Projects/SAPOFotosApertureExportPlugin/ExportPlugin_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		0D570F681313DE4900CEA167 /* AlbumGetListByUserResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumGetListByUserResult.h; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/AlbumGetListByUserResult.h; sourceTree = SOURCE_ROOT; };
 		0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumGetListByUserResult.m; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/AlbumGetListByUserResult.m; sourceTree = SOURCE_ROOT; };
@@ -64,6 +114,8 @@
 		0D570F711313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAPOFotosApertureExportPlugin.m; sourceTree = "<group>"; };
 		0D570F721313DE7100CEA167 /* iPhotoExportPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhotoExportPlugin.h; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/iPhotoExportPlugin.h; sourceTree = SOURCE_ROOT; };
 		0D570F731313DE7100CEA167 /* iPhotoExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPhotoExportPlugin.m; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/iPhotoExportPlugin.m; sourceTree = SOURCE_ROOT; };
+		0DA78DA91314077100DC6DD3 /* ExportPluginBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportPluginBox.h; sourceTree = "<group>"; };
+		0DA78DAA1314077100DC6DD3 /* ExportPluginBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportPluginBox.m; sourceTree = "<group>"; };
 		0DDF931E130AC4DD00C5F31A /* NSArray+XMLelement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+XMLelement.h"; sourceTree = "<group>"; };
 		0DDF931F130AC4DD00C5F31A /* NSArray+XMLelement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+XMLelement.m"; sourceTree = "<group>"; };
 		0DDF9320130AC4DD00C5F31A /* NSDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
@@ -92,6 +144,38 @@
 		0DE4AE12131307E100EE96E1 /* ExportMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportMgr.h; sourceTree = "<group>"; };
 		0DE4AE13131307E100EE96E1 /* ExportPluginBoxProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportPluginBoxProtocol.h; sourceTree = "<group>"; };
 		0DE4AE14131307E100EE96E1 /* ExportPluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportPluginProtocol.h; sourceTree = "<group>"; };
+		0DE8F369131550D90039B92A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ProgressSheet.xib; sourceTree = "<group>"; };
+		0DE8F403131560D10039B92A /* ProgressSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressSheetController.h; sourceTree = "<group>"; };
+		0DE8F404131560D10039B92A /* ProgressSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSheetController.m; sourceTree = "<group>"; };
+		0DE8F507131581760039B92A /* SAPOFotosPublisher.publisher */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAPOFotosPublisher.publisher; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DE8F508131581760039B92A /* iPhotoPublishPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPhotoPublishPlugin-Info.plist"; sourceTree = "<group>"; };
+		0DE8F51A131583430039B92A /* CDStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDStructures.h; sourceTree = "<group>"; };
+		0DE8F51B131583430039B92A /* IPHFlickrPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPHFlickrPlugin.h; sourceTree = "<group>"; };
+		0DE8F51C131583430039B92A /* IPHFlickrSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPHFlickrSettings.h; sourceTree = "<group>"; };
+		0DE8F51D131583430039B92A /* IPHPluginSettingsProtocol-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IPHPluginSettingsProtocol-Protocol.h"; sourceTree = "<group>"; };
+		0DE8F51E131583430039B92A /* IPHPublishServiceFlickrBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPHPublishServiceFlickrBase.h; sourceTree = "<group>"; };
+		0DE8F51F131583430039B92A /* IPHPublishServiceProtocol-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IPHPublishServiceProtocol-Protocol.h"; sourceTree = "<group>"; };
+		0DE8F520131583430039B92A /* NSData-IPHMD5Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData-IPHMD5Extensions.h"; sourceTree = "<group>"; };
+		0DE8F521131583430039B92A /* NSString-IPHMD5Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString-IPHMD5Extensions.h"; sourceTree = "<group>"; };
+		0DE8F537131585000039B92A /* IPHSAPOFotosPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPHSAPOFotosPlugin.h; sourceTree = "<group>"; };
+		0DE8F538131585000039B92A /* IPHSAPOFotosPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPHSAPOFotosPlugin.m; sourceTree = "<group>"; };
+		0DE8F548131589760039B92A /* sl-icon_sapofotos.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "sl-icon_sapofotos.tiff"; sourceTree = "<group>"; };
+		0DE8F549131589760039B92A /* sl-icon-small_sapofotos.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "sl-icon-small_sapofotos.tiff"; sourceTree = "<group>"; };
+		0DE8F54A131589760039B92A /* tools_org-publish_sapofotos.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "tools_org-publish_sapofotos.tiff"; sourceTree = "<group>"; };
+		0DE8F56413158ACF0039B92A /* IPPublishPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPPublishPluginManager.h; sourceTree = "<group>"; };
+		0DE8F58313166D050039B92A /* IPHPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPHPluginManager.h; sourceTree = "<group>"; };
+		0DE8F58613166D1B0039B92A /* IPHPluginManagerProtocol-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IPHPluginManagerProtocol-Protocol.h"; sourceTree = "<group>"; };
+		0DE8F6A41316A5DF0039B92A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "English.lproj/IPH-SAPOFotosSettings.xib"; sourceTree = "<group>"; };
+		0DE8F6BB1316A7090039B92A /* IPHSAPOFotosSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPHSAPOFotosSettingsController.h; sourceTree = "<group>"; };
+		0DE8F6BC1316A7090039B92A /* IPHSAPOFotosSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPHSAPOFotosSettingsController.m; sourceTree = "<group>"; };
+		0DE8F7FE1316C4F00039B92A /* Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DE8F8001316C4F00039B92A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
+		0DE8F8071316C5060039B92A /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = Library/Frameworks/GHUnit.framework; sourceTree = SDKROOT; };
+		0DE8F8211316C5660039B92A /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUnitTestMain.m; sourceTree = "<group>"; };
+		0DE8F8221316C5660039B92A /* PhotoUploadOperationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoUploadOperationTest.m; sourceTree = "<group>"; };
+		0DE8FF97131E5FD40039B92A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/CreateAlbumSheet.xib; sourceTree = "<group>"; };
+		0DE8FFA4131E62170039B92A /* CreateAlbumSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateAlbumSheetController.h; sourceTree = "<group>"; };
+		0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateAlbumSheetController.m; sourceTree = "<group>"; };
 		0DE9C494130AF6A5001A8CE2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		287924B70DAEB2A20074992A /* ApertureExportManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApertureExportManager.h; sourceTree = "<group>"; };
@@ -115,6 +199,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0DE8F505131581760039B92A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DE8F52E1315843C0039B92A /* Security.framework in Frameworks */,
+				0DE8F52F1315843C0039B92A /* Cocoa.framework in Frameworks */,
+				0DE8F5301315843D0039B92A /* PluginManager.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DE8F7FC1316C4F00039B92A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DE8F8041316C4FF0039B92A /* PluginManager.framework in Frameworks */,
+				0DE8F8051316C5000039B92A /* Cocoa.framework in Frameworks */,
+				0DE8F8061316C5000039B92A /* Security.framework in Frameworks */,
+				0DE8F8081316C5060039B92A /* GHUnit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D5B49B3048680CD000E48DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -131,12 +236,15 @@
 		089C166AFE841209C02AAC07 /* MyApertureExportPlugIn */ = {
 			isa = PBXGroup;
 			children = (
+				0DE8F8201316C5660039B92A /* Tests */,
 				0DDF931C130AC4DD00C5F31A /* Vendor */,
 				0DDF933B130AC4FD00C5F31A /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				D118EB1C0AC08EE7006DD2FE /* Products */,
+				0DE8F7FE1316C4F00039B92A /* Tests.app */,
+				0DE8F8001316C4F00039B92A /* Tests-Info.plist */,
 			);
 			name = MyApertureExportPlugIn;
 			sourceTree = "<group>";
@@ -153,9 +261,10 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0D570F461313DD4700CEA167 /* ExportView.nib */,
-				0D570F481313DD4700CEA167 /* iPhotoExportView.nib */,
+				0DE8F57813166B920039B92A /* Images */,
+				0DE8F57913166B9A0039B92A /* NIB */,
 				0D570F3E1313DD2000CEA167 /* iPhotoExportPlugin-Info.plist */,
+				0DE8F508131581760039B92A /* iPhotoPublishPlugin-Info.plist */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				D118EA640AC08CCB006DD2FE /* Localizable.strings */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -172,13 +281,31 @@
 				0D570F711313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m */,
 				0D570F721313DE7100CEA167 /* iPhotoExportPlugin.h */,
 				0D570F731313DE7100CEA167 /* iPhotoExportPlugin.m */,
+				0DE8F403131560D10039B92A /* ProgressSheetController.h */,
+				0DE8F404131560D10039B92A /* ProgressSheetController.m */,
+				0DE8F537131585000039B92A /* IPHSAPOFotosPlugin.h */,
+				0DE8F538131585000039B92A /* IPHSAPOFotosPlugin.m */,
+				0DE8F6BB1316A7090039B92A /* IPHSAPOFotosSettingsController.h */,
+				0DE8F6BC1316A7090039B92A /* IPHSAPOFotosSettingsController.m */,
+				0DE8FFA4131E62170039B92A /* CreateAlbumSheetController.h */,
+				0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */,
 			);
 			name = "Export Plugin";
+			sourceTree = "<group>";
+		};
+		0DA78DA81314076200DC6DD3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0DA78DA91314077100DC6DD3 /* ExportPluginBox.h */,
+				0DA78DAA1314077100DC6DD3 /* ExportPluginBox.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		0DDF931C130AC4DD00C5F31A /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				0DE8F519131583430039B92A /* iPhotoPublisher */,
 				0DE4AE10131307E100EE96E1 /* iPhoto */,
 				287924B60DAEB2A20074992A /* ApertureHeaders */,
 				0DDF93BE130ADA2600C5F31A /* EMKeychain */,
@@ -213,6 +340,7 @@
 		0DDF933B130AC4FD00C5F31A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0DA78DA81314076200DC6DD3 /* Views */,
 				0D570F511313DD8100CEA167 /* Export Plugin */,
 				0DDF9344130AC55100C5F31A /* Common */,
 				0DDF9343130AC52B00C5F31A /* SAPOPhotosAPI */,
@@ -262,12 +390,64 @@
 			path = iPhoto;
 			sourceTree = "<group>";
 		};
+		0DE8F519131583430039B92A /* iPhotoPublisher */ = {
+			isa = PBXGroup;
+			children = (
+				0DE8F51A131583430039B92A /* CDStructures.h */,
+				0DE8F51B131583430039B92A /* IPHFlickrPlugin.h */,
+				0DE8F51C131583430039B92A /* IPHFlickrSettings.h */,
+				0DE8F58313166D050039B92A /* IPHPluginManager.h */,
+				0DE8F58613166D1B0039B92A /* IPHPluginManagerProtocol-Protocol.h */,
+				0DE8F51D131583430039B92A /* IPHPluginSettingsProtocol-Protocol.h */,
+				0DE8F51E131583430039B92A /* IPHPublishServiceFlickrBase.h */,
+				0DE8F51F131583430039B92A /* IPHPublishServiceProtocol-Protocol.h */,
+				0DE8F56413158ACF0039B92A /* IPPublishPluginManager.h */,
+				0DE8F520131583430039B92A /* NSData-IPHMD5Extensions.h */,
+				0DE8F521131583430039B92A /* NSString-IPHMD5Extensions.h */,
+			);
+			name = iPhotoPublisher;
+			path = ../../Projects/SAPOFotosApertureExportPlugin/Vendor/iPhotoPublisher;
+			sourceTree = SOURCE_ROOT;
+		};
+		0DE8F57813166B920039B92A /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				0DE8F548131589760039B92A /* sl-icon_sapofotos.tiff */,
+				0DE8F549131589760039B92A /* sl-icon-small_sapofotos.tiff */,
+				0DE8F54A131589760039B92A /* tools_org-publish_sapofotos.tiff */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		0DE8F57913166B9A0039B92A /* NIB */ = {
+			isa = PBXGroup;
+			children = (
+				0DE8F36C131550E10039B92A /* ProgressSheet.xib */,
+				0D570F461313DD4700CEA167 /* ExportView.nib */,
+				0D570F481313DD4700CEA167 /* Panel.nib */,
+				0DE8F6A61316A5E60039B92A /* IPH-SAPOFotosSettings.xib */,
+				0DE8FF9A131E5FD80039B92A /* CreateAlbumSheet.xib */,
+			);
+			name = NIB;
+			sourceTree = "<group>";
+		};
+		0DE8F8201316C5660039B92A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0DE8F8211316C5660039B92A /* GHUnitTestMain.m */,
+				0DE8F8221316C5660039B92A /* PhotoUploadOperationTest.m */,
+			);
+			name = Tests;
+			path = ../../Projects/SAPOFotosApertureExportPlugin/Tests;
+			sourceTree = SOURCE_ROOT;
+		};
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				D15DEA490ABF639500CBE3A5 /* PluginManager.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				0DE9C494130AF6A5001A8CE2 /* Security.framework */,
+				0DE8F8071316C5060039B92A /* GHUnit.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -304,7 +484,8 @@
 		D118EB1C0AC08EE7006DD2FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0D570F3D1313DD2000CEA167 /* iPhotoExportPlugin.bundle */,
+				0DE8F507131581760039B92A /* SAPOFotosPublisher.publisher */,
+				0D570F3D1313DD2000CEA167 /* SAPOFotosExporter.iPhotoExporter */,
 				D118EB0F0AC08EAE006DD2FE /* SAPOFotosApertureExportPlugin.ApertureExport */,
 			);
 			name = Products;
@@ -327,8 +508,42 @@
 			);
 			name = iPhotoExportPlugin;
 			productName = iPhotoExportPlugin;
-			productReference = 0D570F3D1313DD2000CEA167 /* iPhotoExportPlugin.bundle */;
+			productReference = 0D570F3D1313DD2000CEA167 /* SAPOFotosExporter.iPhotoExporter */;
 			productType = "com.apple.product-type.bundle";
+		};
+		0DE8F506131581760039B92A /* iPhotoPublishPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DE8F50B131581770039B92A /* Build configuration list for PBXNativeTarget "iPhotoPublishPlugin" */;
+			buildPhases = (
+				0DE8F503131581760039B92A /* Resources */,
+				0DE8F504131581760039B92A /* Sources */,
+				0DE8F505131581760039B92A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iPhotoPublishPlugin;
+			productName = iPhotoPublishPlugin;
+			productReference = 0DE8F507131581760039B92A /* SAPOFotosPublisher.publisher */;
+			productType = "com.apple.product-type.bundle";
+		};
+		0DE8F7FD1316C4F00039B92A /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DE8F8031316C4F10039B92A /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				0DE8F7FA1316C4F00039B92A /* Resources */,
+				0DE8F7FB1316C4F00039B92A /* Sources */,
+				0DE8F7FC1316C4F00039B92A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = 0DE8F7FE1316C4F00039B92A /* Tests.app */;
+			productType = "com.apple.product-type.application";
 		};
 		8D5B49AC048680CD000E48DA /* SAPOFotosApertureExportPlugin */ = {
 			isa = PBXNativeTarget;
@@ -371,6 +586,8 @@
 			targets = (
 				8D5B49AC048680CD000E48DA /* SAPOFotosApertureExportPlugin */,
 				0D570F3C1313DD2000CEA167 /* iPhotoExportPlugin */,
+				0DE8F506131581760039B92A /* iPhotoPublishPlugin */,
+				0DE8F7FD1316C4F00039B92A /* Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -380,7 +597,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D570F4C1313DD5400CEA167 /* iPhotoExportView.nib in Resources */,
+				0D570F4C1313DD5400CEA167 /* Panel.nib in Resources */,
+				0DE8F36E131550E10039B92A /* ProgressSheet.xib in Resources */,
+				0DE8FF9C131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DE8F503131581760039B92A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DE8F54B131589760039B92A /* sl-icon_sapofotos.tiff in Resources */,
+				0DE8F54C131589760039B92A /* sl-icon-small_sapofotos.tiff in Resources */,
+				0DE8F54D131589760039B92A /* tools_org-publish_sapofotos.tiff in Resources */,
+				0DE8F6A71316A5E60039B92A /* IPH-SAPOFotosSettings.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DE8F7FA1316C4F00039B92A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +628,8 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				D118EA660AC08CCB006DD2FE /* Localizable.strings in Resources */,
 				0D570F4A1313DD4700CEA167 /* ExportView.nib in Resources */,
+				0DE8F36D131550E10039B92A /* ProgressSheet.xib in Resources */,
+				0DE8FF9B131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +655,52 @@
 				0D570F9D1313DFBB00CEA167 /* EMKeychainItem.m in Sources */,
 				0D570F9E1313DFC500CEA167 /* PhotoUploadOperation.m in Sources */,
 				0D570F9F1313DFC600CEA167 /* SAPOPhotosAPI.m in Sources */,
+				0DA78DAC1314077100DC6DD3 /* ExportPluginBox.m in Sources */,
+				0DE8F405131560D10039B92A /* ProgressSheetController.m in Sources */,
+				0DE8FFA6131E62170039B92A /* CreateAlbumSheetController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DE8F504131581760039B92A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DE8F5221315840C0039B92A /* AlbumGetListByUserResult.m in Sources */,
+				0DE8F5231315840C0039B92A /* SAPOPhotosAPI.m in Sources */,
+				0DE8F5241315840D0039B92A /* PhotoUploadOperation.m in Sources */,
+				0DE8F525131584160039B92A /* EMKeychainItem.m in Sources */,
+				0DE8F5261315841A0039B92A /* NSArray+XMLelement.m in Sources */,
+				0DE8F5271315841A0039B92A /* NSDataAdditions.m in Sources */,
+				0DE8F5281315841B0039B92A /* NSDate+xml.m in Sources */,
+				0DE8F5291315841C0039B92A /* NSString+Helpers.m in Sources */,
+				0DE8F52A1315841C0039B92A /* WebService.m in Sources */,
+				0DE8F52B1315841D0039B92A /* WSDLdocument.m in Sources */,
+				0DE8F52C1315841D0039B92A /* XMLdocument.m in Sources */,
+				0DE8F52D1315841E0039B92A /* XMLelement.m in Sources */,
+				0DE8F539131585000039B92A /* IPHSAPOFotosPlugin.m in Sources */,
+				0DE8F6BD1316A7090039B92A /* IPHSAPOFotosSettingsController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DE8F7FB1316C4F00039B92A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DE8F80B1316C5120039B92A /* NSArray+XMLelement.m in Sources */,
+				0DE8F80C1316C5130039B92A /* NSDataAdditions.m in Sources */,
+				0DE8F80D1316C5130039B92A /* NSDate+xml.m in Sources */,
+				0DE8F80E1316C5140039B92A /* NSString+Helpers.m in Sources */,
+				0DE8F80F1316C5150039B92A /* WebService.m in Sources */,
+				0DE8F8101316C5160039B92A /* WSDLdocument.m in Sources */,
+				0DE8F8111316C5160039B92A /* XMLdocument.m in Sources */,
+				0DE8F8121316C5170039B92A /* XMLelement.m in Sources */,
+				0DE8F8131316C51A0039B92A /* EMKeychainItem.m in Sources */,
+				0DE8F8141316C5230039B92A /* ExportPluginBox.m in Sources */,
+				0DE8F8151316C52D0039B92A /* PhotoUploadOperation.m in Sources */,
+				0DE8F8161316C52D0039B92A /* SAPOPhotosAPI.m in Sources */,
+				0DE8F8171316C52E0039B92A /* AlbumGetListByUserResult.m in Sources */,
+				0DE8F8231316C5660039B92A /* GHUnitTestMain.m in Sources */,
+				0DE8F8241316C5660039B92A /* PhotoUploadOperationTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +721,9 @@
 				0DDF93C1130ADA2600C5F31A /* EMKeychainItem.m in Sources */,
 				0D570F6A1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */,
 				0D570F751313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m in Sources */,
+				0DA78DAB1314077100DC6DD3 /* ExportPluginBox.m in Sources */,
+				0DE8F406131560D10039B92A /* ProgressSheetController.m in Sources */,
+				0DE8FFA7131E62170039B92A /* CreateAlbumSheetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,12 +746,36 @@
 			name = ExportView.nib;
 			sourceTree = "<group>";
 		};
-		0D570F481313DD4700CEA167 /* iPhotoExportView.nib */ = {
+		0D570F481313DD4700CEA167 /* Panel.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0D570F491313DD4700CEA167 /* English */,
 			);
-			name = iPhotoExportView.nib;
+			name = Panel.nib;
+			sourceTree = "<group>";
+		};
+		0DE8F36C131550E10039B92A /* ProgressSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DE8F369131550D90039B92A /* English */,
+			);
+			name = ProgressSheet.xib;
+			sourceTree = "<group>";
+		};
+		0DE8F6A61316A5E60039B92A /* IPH-SAPOFotosSettings.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DE8F6A41316A5DF0039B92A /* English */,
+			);
+			name = "IPH-SAPOFotosSettings.xib";
+			sourceTree = "<group>";
+		};
+		0DE8FF9A131E5FD80039B92A /* CreateAlbumSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DE8FF97131E5FD40039B92A /* English */,
+			);
+			name = CreateAlbumSheet.xib;
 			sourceTree = "<group>";
 		};
 		D118EA640AC08CCB006DD2FE /* Localizable.strings */ = {
@@ -481,6 +793,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -490,6 +804,11 @@
 				GCC_PREFIX_HEADER = ExportPlugin_Prefix.pch;
 				INFOPLIST_FILE = "iPhotoExportPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_CFLAGS = (
+					"-DLOG_LEVEL=0",
+					"-DDEBUGLOG",
+					"-DDEBUG",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -497,8 +816,8 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = iPhotoExportPlugin;
-				WRAPPER_EXTENSION = bundle;
+				PRODUCT_NAME = SAPOFotosExporter;
+				WRAPPER_EXTENSION = iPhotoExporter;
 			};
 			name = Debug;
 		};
@@ -527,6 +846,109 @@
 			};
 			name = Release;
 		};
+		0DE8F509131581770039B92A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ExportPlugin_Prefix.pch;
+				INFOPLIST_FILE = "iPhotoPublishPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_CFLAGS = (
+					"-DLOG_LEVEL=0",
+					"-DDEBUGLOG",
+					"-DDEBUG",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SAPOFotosPublisher;
+				WRAPPER_EXTENSION = publisher;
+			};
+			name = Debug;
+		};
+		0DE8F50A131581770039B92A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ExportPlugin_Prefix.pch;
+				INFOPLIST_FILE = "iPhotoPublishPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = iPhotoPublishPlugin;
+				WRAPPER_EXTENSION = publisher;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		0DE8F8011316C4F10039B92A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ExportPlugin_Prefix.pch;
+				INFOPLIST_FILE = "Tests-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+			};
+			name = Debug;
+		};
+		0DE8F8021316C4F10039B92A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Tests-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -540,6 +962,11 @@
 				GCC_PREFIX_HEADER = ExportPlugin_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Application Support/Aperture/Plug-Ins/Export/";
+				OTHER_CFLAGS = (
+					"-DLOG_LEVEL=0",
+					"-DDEBUGLOG",
+					"-DDEBUG",
+				);
 				PRODUCT_NAME = SAPOFotosApertureExportPlugin;
 				WRAPPER_EXTENSION = ApertureExport;
 				ZERO_LINK = YES;
@@ -569,6 +996,11 @@
 				FRAMEWORK_SEARCH_PATHS = "/Library/Frameworks//**";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = (
+					"-DLOG_LEVEL=0",
+					"-DDEBUGLOG",
+					"-DDEBUG",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx;
 			};
@@ -595,6 +1027,24 @@
 			buildConfigurations = (
 				0D570F3F1313DD2100CEA167 /* Debug */,
 				0D570F401313DD2100CEA167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DE8F50B131581770039B92A /* Build configuration list for PBXNativeTarget "iPhotoPublishPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DE8F509131581770039B92A /* Debug */,
+				0DE8F50A131581770039B92A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DE8F8031316C4F10039B92A /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DE8F8011316C4F10039B92A /* Debug */,
+				0DE8F8021316C4F10039B92A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

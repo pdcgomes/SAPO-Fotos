@@ -51,11 +51,10 @@
 	[paramArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"album", @"name",album?album:nil, @"value", nil]];
 	NSURLRequest *request = [self makeSOAPRequestWithLocation:location Parameters:paramArray Operation:@"AlbumCreate" Namespace:@"http://services.sapo.pt/definitions/Photos" Action:@"http://services.sapo.pt/definitions/Photos/AlbumCreate" SOAPVersion:SOAPVersion1_0];
 	NSURLResponse *response;
-	NSError *error;
+	NSError *error = nil;
 	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
 	XMLdocument *xml = [XMLdocument documentWithData:data];
-	return [self flattenSOAPResponse:xml.documentRoot withPath:@""];
-	//	return [self returnComplexTypeFromSOAPResponse:xml asClass:[AlbumCreateResult class]];  // complex type 
+	return [self flattenSOAPResponse:xml.documentRoot withPath:@"Body/AlbumCreateResponse/AlbumCreateResult/result"];
 }
 
 - (AlbumGetListByUserResult *) albumGetListByUserWithUser:(NSDictionary *)user page:(NSInteger)page orderBy:(NSString *)orderBy interface:(NSString *)interface
@@ -68,7 +67,7 @@
 	[paramArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"interface", @"name",interface?interface:@"", @"value", nil]];
 	NSURLRequest *request = [self makeSOAPRequestWithLocation:location Parameters:paramArray Operation:@"AlbumGetListByUser" Namespace:@"http://services.sapo.pt/definitions/Photos" Action:@"http://services.sapo.pt/definitions/Photos/AlbumGetListByUser" SOAPVersion:SOAPVersion1_0];
 	NSURLResponse *response;
-	NSError *error;
+	NSError *error = nil;
 	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
 	XMLdocument *xml = [XMLdocument documentWithData:data];
 	

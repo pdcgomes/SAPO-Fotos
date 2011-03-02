@@ -311,12 +311,12 @@
 	[self finishExportIfCompletedOrCanceled];
 }
 
-- (void)photoUploadOperation:(PhotoUploadOperation *)operation didFailWithError:(NSError *)error
-{
-	TRACE(@"Upload operation for photo <%@> failed with error <%@>", error);
-	[uploadOperations removeObject:operation];
-	[self finishExportIfCompletedOrCanceled];	
-}
+//- (void)photoUploadOperation:(PhotoUploadOperation *)operation didFailWithError:(NSError *)error
+//{
+//	TRACE(@"Upload operation for photo <%@> failed with error <%@>", error);
+//	[uploadOperations removeObject:operation];
+//	[self finishExportIfCompletedOrCanceled];	
+//}
 
 - (void)photoUploadOperation:(PhotoUploadOperation *)operation didReportProgress:(NSNumber *)progress
 {

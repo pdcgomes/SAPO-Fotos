@@ -10,6 +10,8 @@
 #import "SAPOPhotosAPI.h"
 #import "PhotoUploadOperation.h"
 #import "AlbumGetListByUserResult.h"
+#import "ProgressSheetController.h"
+#import "CreateAlbumSheetController.h"
 
 @implementation AbstractExportPlugin
 
@@ -24,10 +26,14 @@
 	[operationQueue cancelAllOperations];
 	[uploadOperations makeObjectsPerformSelector:@selector(setDelegate:) withObject:nil];
 	
+	[progressController release];
+	[createAlbumController release];
+	
 	[session release];
 	[albums release];
 	[operationQueue release];
 	[uploadOperations release];
+	[failedOperations release];
 	[exportBasePath release];
 	[exportedImagePaths release];
 	
@@ -46,12 +52,24 @@
 {
 	if((self = [super init])) {
 		_nibName = [nibName copy];
+	
+		session = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+				   [NSNumber numberWithBool:NO], kSession_IsAuthenticatedKey, 
+				   [NSNumber numberWithBool:NO], kSession_IsAuthenticatingKey, 
+				   [NSNumber numberWithDouble:0], kSession_CurrentProgressKey,
+				   [NSNumber numberWithInt:0], kSession_CurrentImageKey,
+				   [NSNumber numberWithInt:0], kSession_TotalImagesKey,
+				   nil];
+		
+		operationQueue = [[NSOperationQueue alloc] init];
+		[operationQueue setMaxConcurrentOperationCount:5]; // TODO: define a constant 
 	}
 	return self;
 }
 
 - (NSView *)settingsView
 {
+	return settingsView;
 	if(nil == settingsView) {
 		// Load the nib using NSNib, and retain the array of top-level objects so we can release
 		// them properly in dealloc
@@ -78,12 +96,12 @@
 
 - (void)willBeActivated
 {
-	
+	TRACE(@"");
 }
 
 - (void)willBeDeactivated
 {
-	
+	TRACE(@"");	
 }
 
 #pragma mark -
@@ -107,6 +125,11 @@
 #pragma mark -
 #pragma mark Export Process Methods
 
+- (NSUInteger)numberOfImages
+{
+	return 0;
+}
+
 - (void)exportManagerShouldBeginExport
 {
 	if(![[session objectForKey:kSession_IsAuthenticatedKey] boolValue]) {
@@ -120,8 +143,19 @@
 	if(!exportedImagePaths) {
 		exportedImagePaths = [[NSMutableArray alloc] initWithCapacity:1];
 	}
+
+	[session setObject:[NSNumber numberWithDouble:0] forKey:kSession_CurrentProgressKey];
 	
-	// You must call [_exportManager shouldBeginExport] here or elsewhere before Aperture will begin the export process
+	progressController = [[ProgressSheetController alloc] initWithWindowNibName:@"ProgressSheet"];
+	progressController.maxProgress = 100.0;
+	progressController.numberOfImages = [self numberOfImages];
+	[NSApp beginSheet:progressController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(progressSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)progressSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet orderOut:self];
+	SKSafeRelease(progressController);
 }
 
 - (void)exportManagerWillBeginExportToPath:(NSString *)path
@@ -150,12 +184,14 @@
 	return YES;	
 }
 
-- (void)exportManagerDidWriteImageDataToRelativePath:(NSString *)relativePath forImageAtIndex:(unsigned)index
+//
+//- (void)exportManagerDidWriteImageDataToRelativePath:(NSString *)relativePath forImageAtIndex:(unsigned)index
+- (void)exportImageWithPath:(NSString *)imagePath
 {
-	[exportedImagePaths addObject:relativePath];
+	//[exportedImagePaths addObject:imagePathName];
 	
-	NSString *imagePath = [[@"~/Pictures/Aperture Exports" stringByExpandingTildeInPath] stringByAppendingPathComponent:relativePath];
-	TRACE(@"relativePath <%@> forIndex: %d", imagePath, index);
+//	NSString *imagePath = [[@"~/Pictures/Aperture Exports" stringByExpandingTildeInPath] stringByAppendingPathComponent:relativePath];
+//	TRACE(@"relativePath <%@> forIndex: %d", imagePath, index);
 	
 	NSDictionary *selectedAlbum = [[albumController arrangedObjects] objectAtIndex:[albumController selectionIndex]];
 	NSString *tags = [[tagsTokenField stringValue] copy];
@@ -216,25 +252,42 @@
 {
 	TRACE(@"Upload operation for photo <%@> finished successfully", operation);
 	[uploadOperations removeObject:operation];
+	
+	double progress = ((double)([self numberOfImages] - [uploadOperations count]) / (double)[self numberOfImages]) * 100.0;
+	[session setObject:[NSNumber numberWithDouble:progress] forKey:kSession_CurrentProgressKey];
+//	TRACE(@"Current progress %f", progress);
+	
+//	progressController.progress = progress;
+	
 	[self finishExportIfCompletedOrCanceled];
 }
 
 - (void)photoUploadOperation:(PhotoUploadOperation *)operation didFailWithError:(NSError *)error
 {
-	TRACE(@"Upload operation for photo <%@> failed with error <%@>", error);
+	TRACE(@"Upload operation for photo <%@> failed with error <%@>", error, [error userInfo]);
+
+	if(!failedOperations) {
+		failedOperations = [[NSMutableArray alloc] initWithCapacity:1];
+	}
+	[failedOperations addObject:operation];
 	[uploadOperations removeObject:operation];
+	
+	[self updateProgress];
 	[self finishExportIfCompletedOrCanceled];	
 }
 
 - (void)photoUploadOperation:(PhotoUploadOperation *)operation didReportProgress:(NSNumber *)progress
 {
-	TRACE(@"Upload operation for photo <%@> reported progress: [%@]", operation, progress);
-	
-//	[self lockProgress];
-//	
-//	exportProgress.currentValue = [progress longValue];
-//	
-//	[self unlockProgress];
+	[self updateProgress];
+}
+
+- (void)updateProgress
+{
+	// Get the accumulated progress of all running operations
+	double totalProgress = [[uploadOperations valueForKeyPath:@"@sum.progress"] doubleValue] / (double)[self numberOfImages];
+	// Since the upload operations are removed when finished, we also need to add the remainder (100% of each finished operation)
+	totalProgress += (([self numberOfImages] - [uploadOperations count]) * 100.0) / (double)[self numberOfImages];
+	progressController.progress = totalProgress;
 }
 
 #pragma mark -
@@ -243,6 +296,63 @@
 - (void)loginButtonPressed:(id)sender
 {
 	[self authenticateAndRetrieveAlbums];
+}
+
+- (IBAction)createAlbumButtonPressed:(id)sender
+{
+	TRACE(@"");
+	createAlbumController = [[CreateAlbumSheetController alloc] initWithWindowNibName:@"CreateAlbumSheet"];
+	createAlbumController.delegate = self;
+	[NSApp beginSheet:createAlbumController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(createAlbumSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];	
+}
+
+- (void)createAlbumSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet orderOut:self];
+	SKSafeRelease(createAlbumController);
+}
+
+#pragma mark -
+#pragma mark CreateAlbumControllerDelegate
+
+- (BOOL)createAlbumController:(CreateAlbumSheetController *)controller requestedAlbumCreation:(NSDictionary *)album
+{
+	NSString *username = [[usernameTextField stringValue] copy];
+	NSString *password = [[passwordTextField stringValue] copy];
+	
+	NSBlockOperation *operation = [[NSBlockOperation alloc] init];
+	[operation addExecutionBlock:^{
+		SAPOPhotosAPI *client = [[SAPOPhotosAPI alloc] init];
+		[client setUsername:username password:password];
+		
+		NSDictionary *createAlbumParams = [NSDictionary dictionaryWithObjectsAndKeys:
+										   [album objectForKey:@"albumName"], @"title",
+										   [album objectForKey:@"albumDescription"], @"description",
+										   nil];
+		NSDictionary *result = [client albumCreateWithAlbum:createAlbumParams];
+		if([[result objectForKey:@"ok"] isEqualToString:@"true"]) {
+			TRACE(@"Album creation succeeded!");
+		}
+		else {
+			TRACE(@"Album creation failed!");
+		}
+		[client release];
+		
+//		dispatch_queue_t mainQueue = dispatch_get_main_queue();
+//		dispatch_sync(mainQueue, ^{
+//			[NSApp endSheet:controller.window];
+//			[self authenticateAndRetrieveAlbums];
+//		});
+		[NSApp performSelectorOnMainThread:@selector(endSheet:) withObject:controller.window waitUntilDone:NO];
+		[self performSelectorOnMainThread:@selector(authenticateAndRetrieveAlbums) withObject:nil waitUntilDone:NO];
+	}];
+	[operationQueue addOperation:operation];
+	
+	[operation release];
+	[username release];
+	[password release];
+	
+	return YES;
 }
 
 #pragma mark -
@@ -305,6 +415,7 @@
 	[password release];
 }
 
+#define YES_BUTTON_INDEX 0
 - (void)finishExportIfCompletedOrCanceled
 {
 	TRACE(@"***** ATTEMPTING TO FINISH OR CANCEL EXPORT...");
@@ -312,15 +423,39 @@
 		TRACE(@"***** THERE ARE PENDING OPERATIONS. WAITING FOR THEM TO FINISH...");
 		return;
 	}
+	[NSApp endSheet:progressController.window];
+	
+	if([failedOperations count] > 0) {
+		TRACE(@"***** FOUND FAILED OPERATIONS. PROMPTING USER FOR ACTION...");
+		NSAlert *alert = [NSAlert alertWithMessageText:@"Warning" 
+										 defaultButton:@"No" 
+									   alternateButton:@"Yes" 
+										   otherButton:nil 
+							 informativeTextWithFormat:@"Some of the images could not be exported.\nWould you like to retry now?"];
+		[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(retryAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+		return;
+	}
 	
 	[self deleteTemporaryFiles];
 	if(exportCanceled) {
 		TRACE(@"***** CANCELING EXPORT...");
-		[self cancelExport];
+		//[self cancelExport];
 	}
 	else {
 		TRACE(@"***** FISNISHING EXPORT...");
 		[self finishExport];
+	}
+}
+
+- (void)retryAlertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[[alert window] orderOut:self];
+	if(YES_BUTTON_INDEX == returnCode) {
+		[self retryExport];
+	}
+	else {
+		[failedOperations removeAllObjects];
+		[self finishExportIfCompletedOrCanceled];
 	}
 }
 
@@ -332,6 +467,18 @@
 - (void)finishExport
 {
 	TRACE(@"***** SUBCLASSES MUST IMPLEMENT THIS METHOD *****");
+}
+
+- (void)retryExport
+{
+	TRACE(@"***** RETRYING EXPORT FOR <%d> FAILED OPERATIONS...", [failedOperations count]);
+	
+	[self exportManagerShouldBeginExport];
+	NSArray *imagePaths = [failedOperations valueForKey:@"imagePath"];
+	[failedOperations removeAllObjects];
+	for(NSString *imagePath in imagePaths) {
+		[self exportImageWithPath:imagePath];
+	}
 }
 
 - (void)deleteTemporaryFiles

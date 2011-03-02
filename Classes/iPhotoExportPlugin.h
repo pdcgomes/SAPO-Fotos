@@ -15,9 +15,11 @@
 {
 //	IBOutlet id firstView;
 //	IBOutlet id lastView;
-    IBOutlet NSBox	*settingsBox;
-    
-    ExportMgr		*_exportManager;
+    IBOutlet NSBox		*settingsBox;
+    ExportMgr			*_exportManager;
+	
+	NSLock				*progressLock;
+	CDStruct_e5bf5178	progress;
 }
 
 @end

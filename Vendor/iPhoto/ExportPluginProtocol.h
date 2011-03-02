@@ -4,6 +4,15 @@
  *     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2010 by Steve Nygard.
  */
 
+typedef struct {
+    unsigned long _field1;
+    unsigned long _field2;
+    id _field3;
+    char _field4;
+    char _field5;
+    char _field6;
+} CDStruct_e5bf5178;
+
 @protocol ExportPluginProtocol
 - (id)initWithExportImageObj:(id)arg1;
 - (id)settingsView;
@@ -21,7 +30,7 @@
 - (void)clickExport;
 - (void)startExport:(id)arg1;
 - (void)performExport:(id)arg1;
-- (void *)progress;
+- (CDStruct_e5bf5178 *)progress;
 - (void)lockProgress;
 - (void)unlockProgress;
 - (void)cancelExport;

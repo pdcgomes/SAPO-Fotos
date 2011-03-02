@@ -73,10 +73,19 @@
 	GHAssertTrue([result.albums count] > 0, @"No albums found. Expecting at least one album.");
 }
 
-//- (void)test_02_CreateUserAlbum
-//{
-//	
-//}
+- (void)test_02_CreateUserAlbum
+{
+	SAPOPhotosAPI *client = [[SAPOPhotosAPI alloc] init];
+	[client setUsername:@"pdcgomes@sapo.pt" password:@"xt2851cq"];
+	
+	NSDictionary *album = [[NSDictionary alloc] initWithObjectsAndKeys:
+						   @"CreateUserAlbumTest", @"title",
+						   @"CreateUserAlbumTest", @"description",
+						   nil];
+	
+	NSDictionary *result = [client albumCreateWithAlbum:album];
+	TRACE(@"ServiceResponse: %@", result);
+}
 //
 //- (void)test_03_DeleteUserAlbum
 //{
@@ -101,25 +110,24 @@
 //	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:20.0];
 //}
 
-- (void)test_05_PhotoUploadOperationWithAlbum
-{
-	[self prepare];
-	
-	NSString *imagePath = @"/Users/pdcgomes/Downloads/Screenshot.png";
-	NSDictionary *imageProperties = nil;
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  @"pdcgomes@sapo.pt", @"username",
-							  @"xt2851cq", @"password",
-							  @"1", @"albumID",
-							  nil];
-	PhotoUploadOperation *operation = [[PhotoUploadOperation alloc] initWithImagePath:imagePath imageProperties:imageProperties userInfo:userInfo];
-	[operation setDelegate:self];
-	[operationQueue addOperation:operation];
-	[operation release];
-	
-	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:20.0];
-	
-}
+//- (void)test_05_PhotoUploadOperationWithAlbum
+//{
+//	[self prepare];
+//	
+//	NSString *imagePath = @"/Users/pdcgomes/Downloads/Screenshot.png";
+//	NSDictionary *imageProperties = nil;
+//	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//							  @"pdcgomes@sapo.pt", @"username",
+//							  @"xt2851cq", @"password",
+//							  @"1", @"albumID",
+//							  nil];
+//	PhotoUploadOperation *operation = [[PhotoUploadOperation alloc] initWithImagePath:imagePath imageProperties:imageProperties userInfo:userInfo];
+//	[operation setDelegate:self];
+//	[operationQueue addOperation:operation];
+//	[operation release];
+//	
+//	[self waitForStatus:kGHUnitWaitStatusSuccess timeout:20.0];
+//}
 
 #pragma mark -
 #pragma mark PhotoUploadOperationDelegate

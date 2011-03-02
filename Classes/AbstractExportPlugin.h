@@ -10,6 +10,12 @@
 
 #define kSession_IsAuthenticatingKey	@"isPerformingAuthentication"
 #define kSession_IsAuthenticatedKey		@"isAuthenticated"
+#define kSession_CurrentProgressKey		@"progress"
+#define kSession_CurrentImageKey		@"currentImage"
+#define kSession_TotalImagesKey			@"totalImages"
+
+@class ProgressSheetController;
+@class CreateAlbumSheetController;
 
 @interface AbstractExportPlugin : NSObject 
 {
@@ -19,6 +25,7 @@
 	NSArray						*_topLevelNibObjects;
 	
 	// Outlets to your plug-ins user interface
+	
 	IBOutlet NSView				*settingsView;
 	IBOutlet NSView				*firstView;
 	IBOutlet NSView				*lastView;
@@ -30,9 +37,13 @@
 	IBOutlet NSTokenField		*tagsTokenField;
 	
 	IBOutlet NSArrayController	*albumController;
+
+	ProgressSheetController		*progressController;
+	CreateAlbumSheetController	*createAlbumController;
 	
 	NSOperationQueue			*operationQueue;
 	NSMutableArray				*uploadOperations;
+	NSMutableArray				*failedOperations;
 	
 	NSString					*exportBasePath;
 	NSMutableArray				*exportedImagePaths;
@@ -47,12 +58,19 @@
 @property (nonatomic, readonly) NSArray *albums;
 
 - (IBAction)loginButtonPressed:(id)sender;
+- (IBAction)createAlbumButtonPressed:(id)sender;
 
 - (id)initWithNibName:(NSString *)nibName;
 
+- (NSUInteger)numberOfImages;
+
 - (void)finishExport;
 - (void)cancelExport;
+- (void)retryExport;
+- (void)updateProgress;
 
+- (void)exportManagerShouldBeginExport;
+- (void)exportImageWithPath:(NSString *)imagePath;
 - (void)exportManagerDidFinishExport;
 - (void)exportManagerShouldCancelExport;
 

@@ -34,6 +34,7 @@
 @property (nonatomic, readonly) BOOL isExecuting;
 @property (nonatomic, readonly) BOOL isFinished;
 @property (nonatomic, readonly) float progress;
+@property (nonatomic, readonly) NSString *imagePath;
 
 - (id)initWithImagePath:(NSString *)imagePath imageProperties:(NSDictionary *)imageProperties userInfo:(NSDictionary *)userInfo;
 

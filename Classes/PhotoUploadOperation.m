@@ -36,6 +36,7 @@
 @synthesize isExecuting = executing;
 @synthesize isFinished = finished;
 @synthesize progress;
+@synthesize imagePath;
 
 #pragma mark -
 #pragma mark Dealloc and Initialization
@@ -94,6 +95,10 @@
 				[self.delegate performSelectorOnMainThread:@selector(photoUploadOperationDidFinish:) withObject:self waitUntilDone:NO];
 			}
 		}
+		else {
+			[self performSelectorOnMainThread:@selector(reportError:) withObject:nil waitUntilDone:YES];
+		}
+
 		[pool release];
 	};
 	
@@ -154,11 +159,19 @@
 
 	NSMutableDictionary *image = [[NSMutableDictionary alloc] init];
 	if([userInfo containsKey:@"albumID"]) {
-		NSArray *albums = [NSArray arrayWithObject:[NSDictionary dictionaryWithObject:[userInfo objectForKey:@"albumID"] forKey:@"album"]];
+		NSDictionary *album = [NSDictionary dictionaryWithObject:[userInfo objectForKey:@"albumID"] forKey:@"id"];
+//		NSArray *albums = [NSArray arrayWithObject:[NSDictionary dictionaryWithObject:[userInfo objectForKey:@"albumID"] forKey:@"album"]];
+		NSArray *albums = [NSArray arrayWithObject:[NSDictionary dictionaryWithObject:album forKey:@"album"]];
 		[image setObject:albums forKey:@"albums"];
 	}
 	if([userInfo containsKey:@"tags"]) {
 		[image setObject:[userInfo objectForKey:@"tags"] forKey:@"tags"];
+	}
+	if([userInfo containsKey:@"title"]) {
+		[image setObject:[userInfo objectForKey:@"title"] forKey:@"title"];
+	}
+	else {
+		[image setObject:@"Exported Image" forKey:@"title"];
 	}
 	
 	BOOL success = NO;
@@ -262,8 +275,8 @@
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
 	if(totalBytesExpectedToWrite > 0) {
-		self.progress = (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
-		TRACE(@"Current upload progress for image <%@>: %f%", [imagePath lastPathComponent], self.progress * 100.0f);
+		self.progress = ((float)totalBytesWritten/(float)totalBytesExpectedToWrite) * 100.0f;
+//		TRACE(@"Current upload progress for image <%@>: %f%", [imagePath lastPathComponent], self.progress);
 		[self performSelectorOnMainThread:@selector(reportProgress:) withObject:[NSNumber numberWithFloat:self.progress] waitUntilDone:NO];
 	}
 }

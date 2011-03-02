@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>pt.sapo.macos.iPhotoExportPlugin</string>
+	<string>pt.sapo.macos.iPhotoPublishPlugin</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -19,8 +19,8 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSPrincipalClass</key>
-	<string>iPhotoExportPlugin</string>
+	<string>IPHSAPOFotosPlugin</string>
 	<key>NSMainNibFile</key>
-	<string>Panel</string>
+	<string>IPH-SAPOFotosSettings</string>
 </dict>
 </plist>
