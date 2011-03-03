@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D570F4A1313DD4700CEA167 /* ExportView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0D570F461313DD4700CEA167 /* ExportView.nib */; };
+		0D21C21D131FE1AA00A0B8BB /* ApertureExportView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */; };
 		0D570F4C1313DD5400CEA167 /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0D570F481313DD4700CEA167 /* Panel.nib */; };
 		0D570F6A1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
 		0D570F6B1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
@@ -42,6 +42,7 @@
 		0DDF9349130AC57400C5F31A /* SAPOPhotosAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF9348130AC57400C5F31A /* SAPOPhotosAPI.m */; };
 		0DDF93A2130ACAB100C5F31A /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93A1130ACAB100C5F31A /* PhotoUploadOperation.m */; };
 		0DDF93C1130ADA2600C5F31A /* EMKeychainItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDF93C0130ADA2600C5F31A /* EMKeychainItem.m */; };
+		0DE8025B131FDD2D0039B92A /* AbstractExportPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F6F1313DE7100CEA167 /* AbstractExportPlugin.m */; };
 		0DE8F36D131550E10039B92A /* ProgressSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F36C131550E10039B92A /* ProgressSheet.xib */; };
 		0DE8F36E131550E10039B92A /* ProgressSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F36C131550E10039B92A /* ProgressSheet.xib */; };
 		0DE8F405131560D10039B92A /* ProgressSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE8F404131560D10039B92A /* ProgressSheetController.m */; };
@@ -101,9 +102,9 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		0D21C219131FE19D00A0B8BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ApertureExportView.xib; sourceTree = "<group>"; };
 		0D570F3D1313DD2000CEA167 /* SAPOFotosExporter.iPhotoExporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAPOFotosExporter.iPhotoExporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D570F3E1313DD2000CEA167 /* iPhotoExportPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPhotoExportPlugin-Info.plist"; sourceTree = "<group>"; };
-		0D570F471313DD4700CEA167 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../../Projects/SAPOFotosApertureExportPlugin/English.lproj/ExportView.nib; sourceTree = SOURCE_ROOT; };
 		0D570F491313DD4700CEA167 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Panel.nib; sourceTree = "<group>"; };
 		0D570F521313DDB700CEA167 /* ExportPlugin_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExportPlugin_Prefix.pch; path = ../../Projects/SAPOFotosApertureExportPlugin/ExportPlugin_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		0D570F681313DE4900CEA167 /* AlbumGetListByUserResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumGetListByUserResult.h; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/AlbumGetListByUserResult.h; sourceTree = SOURCE_ROOT; };
@@ -423,10 +424,10 @@
 			isa = PBXGroup;
 			children = (
 				0DE8F36C131550E10039B92A /* ProgressSheet.xib */,
-				0D570F461313DD4700CEA167 /* ExportView.nib */,
 				0D570F481313DD4700CEA167 /* Panel.nib */,
 				0DE8F6A61316A5E60039B92A /* IPH-SAPOFotosSettings.xib */,
 				0DE8FF9A131E5FD80039B92A /* CreateAlbumSheet.xib */,
+				0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */,
 			);
 			name = NIB;
 			sourceTree = "<group>";
@@ -627,9 +628,9 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				D118EA660AC08CCB006DD2FE /* Localizable.strings in Resources */,
-				0D570F4A1313DD4700CEA167 /* ExportView.nib in Resources */,
 				0DE8F36D131550E10039B92A /* ProgressSheet.xib in Resources */,
 				0DE8FF9B131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
+				0D21C21D131FE1AA00A0B8BB /* ApertureExportView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +725,7 @@
 				0DA78DAB1314077100DC6DD3 /* ExportPluginBox.m in Sources */,
 				0DE8F406131560D10039B92A /* ProgressSheetController.m in Sources */,
 				0DE8FFA7131E62170039B92A /* CreateAlbumSheetController.m in Sources */,
+				0DE8025B131FDD2D0039B92A /* AbstractExportPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,12 +740,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		0D570F461313DD4700CEA167 /* ExportView.nib */ = {
+		0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				0D570F471313DD4700CEA167 /* English */,
+				0D21C219131FE19D00A0B8BB /* English */,
 			);
-			name = ExportView.nib;
+			name = ApertureExportView.xib;
 			sourceTree = "<group>";
 		};
 		0D570F481313DD4700CEA167 /* Panel.nib */ = {

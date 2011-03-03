@@ -69,7 +69,6 @@
 
 - (NSView *)settingsView
 {
-	return settingsView;
 	if(nil == settingsView) {
 		// Load the nib using NSNib, and retain the array of top-level objects so we can release
 		// them properly in dealloc
@@ -146,11 +145,22 @@
 
 	[session setObject:[NSNumber numberWithDouble:0] forKey:kSession_CurrentProgressKey];
 	
-	progressController = [[ProgressSheetController alloc] initWithWindowNibName:@"ProgressSheet"];
-	progressController.delegate = self;
-	progressController.maxProgress = 100.0;
-	progressController.numberOfImages = [self numberOfImages];
-	[NSApp beginSheet:progressController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(progressSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+//	progressController = [[ProgressSheetController alloc] initWithWindowNibName:@"ProgressSheet"];
+//	progressController.delegate = self;
+//	progressController.maxProgress = 100.0;
+//	progressController.numberOfImages = [self numberOfImages];
+//	[NSApp beginSheet:progressController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(progressSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)presentProgressSheet
+{
+	if(progressController == nil) {
+		progressController = [[ProgressSheetController alloc] initWithWindowNibName:@"ProgressSheet"];
+		progressController.delegate = self;
+		progressController.maxProgress = 100.0;
+		progressController.numberOfImages = [self numberOfImages];
+		[NSApp beginSheet:progressController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(progressSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+	}
 }
 
 - (void)progressSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
@@ -267,9 +277,9 @@
 {
 	TRACE(@"Upload operation for photo <%@> finished successfully", operation);
 	[uploadOperations removeObject:operation];
-	
-	double progress = ((double)([self numberOfImages] - [uploadOperations count]) / (double)[self numberOfImages]) * 100.0;
-	[session setObject:[NSNumber numberWithDouble:progress] forKey:kSession_CurrentProgressKey];
+	[self updateProgress];
+//	double progress = ((double)([self numberOfImages] - [uploadOperations count]) / (double)[self numberOfImages]) * 100.0;
+//	[session setObject:[NSNumber numberWithDouble:progress] forKey:kSession_CurrentProgressKey];
 //	TRACE(@"Current progress %f", progress);
 	
 //	progressController.progress = progress;
@@ -299,7 +309,7 @@
 - (void)updateProgress
 {
 	// Get the accumulated progress of all running operations
-	double totalProgress = [[uploadOperations valueForKeyPath:@"@sum.progress"] doubleValue] / (double)[self numberOfImages];
+	totalProgress = [[uploadOperations valueForKeyPath:@"@sum.progress"] doubleValue] / (double)[self numberOfImages];
 	// Since the upload operations are removed when finished, we also need to add the remainder (100% of each finished operation)
 	totalProgress += (([self numberOfImages] - [uploadOperations count]) * 100.0) / (double)[self numberOfImages];
 	progressController.progress = totalProgress;
@@ -342,7 +352,6 @@
 				[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(createAlbumFailedAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 			});
 		}
-		[createAlbumParams release];
 		[client release];
 	}];
 	[operationQueue addOperation:operation];
@@ -498,8 +507,9 @@
 	TRACE(@"***** REMOVING TEMPORARY FILES... *****");
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	for(NSString *imagePath in exportedImagePaths) {
-		if(![fileManager removeItemAtPath:[exportBasePath stringByAppendingPathComponent:imagePath] error:nil]) {
-			ERROR(@"Error while trying to remove temporary file <%@>", [exportBasePath stringByAppendingPathComponent:imagePath]);
+		TRACE(@"Removing file: <%@>", imagePath);
+		if(![fileManager removeItemAtPath:imagePath error:nil]) {
+			ERROR(@"Error while trying to remove temporary file <%@>", imagePath);
 		}
 	}
 }

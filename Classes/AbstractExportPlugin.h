@@ -52,6 +52,8 @@
 	
 	NSMutableDictionary			*session;
 	NSArray						*albums;
+	
+	double						totalProgress;
 }
 
 @property (nonatomic, readonly) NSMutableDictionary *session;
@@ -68,6 +70,7 @@
 - (void)cancelExport;
 - (void)retryExport;
 - (void)updateProgress;
+- (void)presentProgressSheet;
 
 - (void)exportManagerShouldBeginExport;
 - (void)exportImageWithPath:(NSString *)imagePath;

@@ -11,9 +11,9 @@
 #import <Foundation/Foundation.h>
 #import "ApertureExportManager.h"
 #import "ApertureExportPlugIn.h"
+#import "AbstractExportPlugin.h"
 
-
-@interface SAPOFotosApertureExportPlugin : NSObject <ApertureExportPlugIn>
+@interface SAPOFotosApertureExportPlugin : AbstractExportPlugin <ApertureExportPlugIn>
 {
 	// The cached API Manager object, as passed to the -initWithAPIManager: method.
 	id _apiManager; 
@@ -26,39 +26,39 @@
 	
 	// Top-level objects in the nib are automatically retained - this array
 	// tracks those, and releases them
-	NSArray						*_topLevelNibObjects;
+//	NSArray						*_topLevelNibObjects;
 	
 	// The structure used to pass all progress information back to Aperture
 	ApertureExportProgress		exportProgress;
 
 	// Outlets to your plug-ins user interface
-	IBOutlet NSView				*settingsView;
-	IBOutlet NSView				*firstView;
-	IBOutlet NSView				*lastView;
+//	IBOutlet NSView				*settingsView;
+//	IBOutlet NSView				*firstView;
+//	IBOutlet NSView				*lastView;
 	
-	IBOutlet NSTextField		*usernameTextField;
-	IBOutlet NSTextField		*passwordTextField;
+//	IBOutlet NSTextField		*usernameTextField;
+//	IBOutlet NSTextField		*passwordTextField;
 	
-	IBOutlet NSPopUpButton		*albumsPopUpButton;
-	IBOutlet NSTokenField		*tagsTokenField;
+//	IBOutlet NSPopUpButton		*albumsPopUpButton;
+//	IBOutlet NSTokenField		*tagsTokenField;
 	
-	IBOutlet NSArrayController	*albumController;
+//	IBOutlet NSArrayController	*albumController;
 	
-	NSOperationQueue			*operationQueue;
-	NSMutableArray				*uploadOperations;
+//	NSOperationQueue			*operationQueue;
+//	NSMutableArray				*uploadOperations;
 
-	NSString					*exportBasePath;
-	NSMutableArray				*exportedImagePaths;
+//	NSString					*exportBasePath;
+//	NSMutableArray				*exportedImagePaths;
 	
-	BOOL						exportCanceled;
+//	BOOL						exportCanceled;
 	
-	NSMutableDictionary			*session;
-	NSArray						*albums;
+//	NSMutableDictionary			*session;
+//	NSArray						*albums;
 }
 
-@property (nonatomic, readonly) NSMutableDictionary *session;
-@property (nonatomic, readonly) NSArray *albums;
-
-- (IBAction)loginButtonPressed:(id)sender;
+//@property (nonatomic, readonly) NSMutableDictionary *session;
+//@property (nonatomic, readonly) NSArray *albums;
+//
+//- (IBAction)loginButtonPressed:(id)sender;
 
 @end

@@ -73,6 +73,7 @@
 	[session setObject:[NSNumber numberWithInt:[_exportManager imageCount]] forKey:kSession_TotalImagesKey];
 	 [_exportManager disableControls];
 	[self exportManagerShouldBeginExport];
+	[self presentProgressSheet];
 	
 	// open the file passed in as a parameter
     FILE *stream = fopen([fp8 UTF8String], "w");
