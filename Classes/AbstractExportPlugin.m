@@ -157,7 +157,7 @@
 	if(progressController == nil) {
 		progressController = [[ProgressSheetController alloc] initWithWindowNibName:@"ProgressSheet"];
 		progressController.delegate = self;
-		progressController.maxProgress = 100.0;
+		progressController.maxProgress = MAX_PROGRESS_VALUE;
 		progressController.numberOfImages = [self numberOfImages];
 		[NSApp beginSheet:progressController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(progressSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 	}
@@ -200,7 +200,6 @@
 	NSDictionary *selectedAlbum = [[albumController arrangedObjects] objectAtIndex:[albumController selectionIndex]];
 	NSString *tags = [[tagsTokenField stringValue] copy];
 	
-//	NSDictionary *imageProperties = [_exportManager propertiesWithoutThumbnailForImageAtIndex:index];
 	NSDictionary *imageProperties = nil;
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  [usernameTextField stringValue], @"username",
@@ -311,8 +310,10 @@
 	// Get the accumulated progress of all running operations
 	totalProgress = [[uploadOperations valueForKeyPath:@"@sum.progress"] doubleValue] / (double)[self numberOfImages];
 	// Since the upload operations are removed when finished, we also need to add the remainder (100% of each finished operation)
-	totalProgress += (([self numberOfImages] - [uploadOperations count]) * 100.0) / (double)[self numberOfImages];
+	totalProgress += (([self numberOfImages] - [uploadOperations count]) * MAX_PROGRESS_VALUE) / (double)[self numberOfImages];
 	progressController.progress = totalProgress;
+	
+	TRACE(@"PROGRESS UPDATED TO: %f", totalProgress);
 }
 
 #pragma mark -

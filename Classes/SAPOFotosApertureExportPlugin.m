@@ -136,16 +136,13 @@
 		exportedImagePaths = [[NSMutableArray alloc] initWithCapacity:1];
 	}
 	
-	[self lockProgress];
 	exportProgress = (ApertureExportProgress){
 		.currentValue = 0.0,
-		.totalValue = 100.0,
-		.message = nil,
+		.totalValue = MAX_PROGRESS_VALUE,
+		.message = NSLocalizedString(@"Uploading photos...", @""),
 		.indeterminateProgress = NO,
 	};
-	[self unlockProgress];
 	
-	// You must call [_exportManager shouldBeginExport] here or elsewhere before Aperture will begin the export process
 	[_exportManager shouldBeginExport];
 }
 
@@ -211,6 +208,7 @@
 
 - (ApertureExportProgress *)progress
 {
+	TRACE(@"***** APERTURE IS QUERYING THE PLUGIN FOR PROGRESS. CURRENT VALUE: <%f>", exportProgress.currentValue);
 	return &exportProgress;
 }
 

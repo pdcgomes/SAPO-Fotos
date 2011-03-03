@@ -14,6 +14,8 @@
 #define kSession_CurrentImageKey		@"currentImage"
 #define kSession_TotalImagesKey			@"totalImages"
 
+#define MAX_PROGRESS_VALUE 100.0
+
 @class ProgressSheetController;
 @class CreateAlbumSheetController;
 
@@ -49,11 +51,10 @@
 	NSMutableArray				*exportedImagePaths;
 	
 	BOOL						exportCanceled;
+	double						totalProgress;
 	
 	NSMutableDictionary			*session;
 	NSArray						*albums;
-	
-	double						totalProgress;
 }
 
 @property (nonatomic, readonly) NSMutableDictionary *session;

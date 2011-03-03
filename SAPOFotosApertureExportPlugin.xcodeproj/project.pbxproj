@@ -244,8 +244,6 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				D118EB1C0AC08EE7006DD2FE /* Products */,
-				0DE8F7FE1316C4F00039B92A /* Tests.app */,
-				0DE8F8001316C4F00039B92A /* Tests-Info.plist */,
 			);
 			name = MyApertureExportPlugIn;
 			sourceTree = "<group>";
@@ -267,6 +265,7 @@
 				0D570F3E1313DD2000CEA167 /* iPhotoExportPlugin-Info.plist */,
 				0DE8F508131581760039B92A /* iPhotoPublishPlugin-Info.plist */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
+				0DE8F8001316C4F00039B92A /* Tests-Info.plist */,
 				D118EA640AC08CCB006DD2FE /* Localizable.strings */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 			);
@@ -485,6 +484,7 @@
 		D118EB1C0AC08EE7006DD2FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				0DE8F7FE1316C4F00039B92A /* Tests.app */,
 				0DE8F507131581760039B92A /* SAPOFotosPublisher.publisher */,
 				0D570F3D1313DD2000CEA167 /* SAPOFotosExporter.iPhotoExporter */,
 				D118EB0F0AC08EAE006DD2FE /* SAPOFotosApertureExportPlugin.ApertureExport */,
@@ -546,9 +546,9 @@
 			productReference = 0DE8F7FE1316C4F00039B92A /* Tests.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8D5B49AC048680CD000E48DA /* SAPOFotosApertureExportPlugin */ = {
+		8D5B49AC048680CD000E48DA /* ApertureExportPlugin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "SAPOFotosApertureExportPlugin" */;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "ApertureExportPlugin" */;
 			buildPhases = (
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
@@ -558,7 +558,7 @@
 			);
 			dependencies = (
 			);
-			name = SAPOFotosApertureExportPlugin;
+			name = ApertureExportPlugin;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = MyApertureExportPlugIn;
 			productReference = D118EB0F0AC08EAE006DD2FE /* SAPOFotosApertureExportPlugin.ApertureExport */;
@@ -585,7 +585,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D5B49AC048680CD000E48DA /* SAPOFotosApertureExportPlugin */,
+				8D5B49AC048680CD000E48DA /* ApertureExportPlugin */,
 				0D570F3C1313DD2000CEA167 /* iPhotoExportPlugin */,
 				0DE8F506131581760039B92A /* iPhotoPublishPlugin */,
 				0DE8F7FD1316C4F00039B92A /* Tests */,
@@ -1051,7 +1051,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "SAPOFotosApertureExportPlugin" */ = {
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "ApertureExportPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913B08733D840010E9CD /* Debug */,
