@@ -85,6 +85,8 @@
 	
 	NSDictionary *result = [client albumCreateWithAlbum:album];
 	TRACE(@"ServiceResponse: %@", result);
+
+	[album release];
 }
 //
 //- (void)test_03_DeleteUserAlbum

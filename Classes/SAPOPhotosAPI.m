@@ -54,7 +54,25 @@
 	NSError *error = nil;
 	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
 	XMLdocument *xml = [XMLdocument documentWithData:data];
-	return [self flattenSOAPResponse:xml.documentRoot withPath:@"Body/AlbumCreateResponse/AlbumCreateResult/result"];
+	
+	XMLelement *body = [xml.documentRoot getNamedChild:@"Body"];
+	XMLelement *soapResponse = [body.children lastObject];
+	XMLelement *soapResult = [soapResponse.children lastObject];
+	
+	XMLelement *createResult = [[soapResult getNamedChild:@"result"] getNamedChild:@"ok"];
+	if([createResult.text isEqualToString:@"false"]) {
+		return nil;
+	}
+	
+	XMLelement *createdAlbum = [soapResult getNamedChild:@"album"];
+	NSAssert(createdAlbum != nil, @"Created album unepexectedly nil!");
+	
+	NSMutableDictionary *albumDict = [[NSMutableDictionary alloc] initWithCapacity:[createdAlbum.children count]];
+	for(XMLelement *child in createdAlbum.children) {
+		[albumDict setObject:child.text forKey:child.name];
+	}
+	return [NSDictionary dictionaryWithDictionary:[albumDict autorelease]];
+//	return [self flattenSOAPResponse:xml.documentRoot withPath:@"Body/AlbumCreateResponse/AlbumCreateResult/result"];
 }
 
 - (AlbumGetListByUserResult *) albumGetListByUserWithUser:(NSDictionary *)user page:(NSInteger)page orderBy:(NSString *)orderBy interface:(NSString *)interface

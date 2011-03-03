@@ -319,11 +319,11 @@
 		[client setUsername:username password:password];
 		
 		NSDictionary *createAlbumParams = [NSDictionary dictionaryWithObjectsAndKeys:
-										   [album objectForKey:@"albumName"], @"title",
-										   [album objectForKey:@"albumDescription"], @"description",
+										   SKSafeString([album objectForKey:@"albumName"]), @"title",
+										   SKSafeString([album objectForKey:@"albumDescription"]), @"description",
 										   nil];
-		NSDictionary *result = [client albumCreateWithAlbum:createAlbumParams];
-		if([[result objectForKey:@"ok"] isEqualToString:@"true"]) {
+		NSDictionary *createdAlbum = [client albumCreateWithAlbum:createAlbumParams];
+		if(createdAlbum != nil) {
 			TRACE(@"Album creation succeeded!");
 			dispatch_sync(dispatch_get_main_queue(), ^{
 				[NSApp endSheet:controller.window];
@@ -342,6 +342,7 @@
 				[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(createAlbumFailedAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 			});
 		}
+		[createAlbumParams release];
 		[client release];
 	}];
 	[operationQueue addOperation:operation];

@@ -23,10 +23,7 @@
 - (void)awakeFromNib
 {
 	[self willChangeValueForKey:@"album"];
-	album = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-			 @"", @"albumName",
-			 @"", @"albumDescription",
-			 nil];
+	album = [[NSMutableDictionary alloc] initWithCapacity:2];
 	[self didChangeValueForKey:@"album"];
 }
 
