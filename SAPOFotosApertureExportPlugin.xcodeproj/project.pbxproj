@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0D21C21D131FE1AA00A0B8BB /* ApertureExportView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */; };
+		0D23085A133121720011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
+		0D23085B133121720011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
+		0D2308671331217D0011B219 /* GTMOAuth.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
+		0D2308681331217F0011B219 /* GTMOAuth.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
 		0D570F4C1313DD5400CEA167 /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0D570F481313DD4700CEA167 /* Panel.nib */; };
 		0D570F6A1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
 		0D570F6B1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
@@ -98,23 +102,49 @@
 		D15DEA4A0ABF639500CBE3A5 /* PluginManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D15DEA490ABF639500CBE3A5 /* PluginManager.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0D23082B13311BBB0011B219 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0D2308671331217D0011B219 /* GTMOAuth.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D23082C13311BBB0011B219 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0D2308681331217F0011B219 /* GTMOAuth.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		0D21C219131FE19D00A0B8BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ApertureExportView.xib; sourceTree = "<group>"; };
+		0D230859133121720011B219 /* GTMOAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GTMOAuth.framework; path = Frameworks/GTMOAuth.framework; sourceTree = "<group>"; };
 		0D570F3D1313DD2000CEA167 /* SAPOFotosExporter.iPhotoExporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAPOFotosExporter.iPhotoExporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D570F3E1313DD2000CEA167 /* iPhotoExportPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPhotoExportPlugin-Info.plist"; sourceTree = "<group>"; };
 		0D570F491313DD4700CEA167 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Panel.nib; sourceTree = "<group>"; };
 		0D570F521313DDB700CEA167 /* ExportPlugin_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExportPlugin_Prefix.pch; path = ../../Projects/SAPOFotosApertureExportPlugin/ExportPlugin_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		0D570F681313DE4900CEA167 /* AlbumGetListByUserResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumGetListByUserResult.h; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/AlbumGetListByUserResult.h; sourceTree = SOURCE_ROOT; };
 		0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumGetListByUserResult.m; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/AlbumGetListByUserResult.m; sourceTree = SOURCE_ROOT; };
-		0D570F6E1313DE7100CEA167 /* AbstractExportPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractExportPlugin.h; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/AbstractExportPlugin.h; sourceTree = SOURCE_ROOT; };
-		0D570F6F1313DE7100CEA167 /* AbstractExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractExportPlugin.m; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/AbstractExportPlugin.m; sourceTree = SOURCE_ROOT; };
+		0D570F6E1313DE7100CEA167 /* AbstractExportPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractExportPlugin.h; sourceTree = "<group>"; };
+		0D570F6F1313DE7100CEA167 /* AbstractExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractExportPlugin.m; sourceTree = "<group>"; };
 		0D570F701313DE7100CEA167 /* SAPOFotosApertureExportPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAPOFotosApertureExportPlugin.h; sourceTree = "<group>"; };
 		0D570F711313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAPOFotosApertureExportPlugin.m; sourceTree = "<group>"; };
-		0D570F721313DE7100CEA167 /* iPhotoExportPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhotoExportPlugin.h; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/iPhotoExportPlugin.h; sourceTree = SOURCE_ROOT; };
-		0D570F731313DE7100CEA167 /* iPhotoExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPhotoExportPlugin.m; path = ../../Projects/SAPOFotosApertureExportPlugin/Classes/iPhotoExportPlugin.m; sourceTree = SOURCE_ROOT; };
+		0D570F721313DE7100CEA167 /* iPhotoExportPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhotoExportPlugin.h; sourceTree = "<group>"; };
+		0D570F731313DE7100CEA167 /* iPhotoExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhotoExportPlugin.m; sourceTree = "<group>"; };
 		0DA78DA91314077100DC6DD3 /* ExportPluginBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportPluginBox.h; sourceTree = "<group>"; };
 		0DA78DAA1314077100DC6DD3 /* ExportPluginBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportPluginBox.m; sourceTree = "<group>"; };
 		0DDF931E130AC4DD00C5F31A /* NSArray+XMLelement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+XMLelement.h"; sourceTree = "<group>"; };
@@ -197,6 +227,7 @@
 				0D570FA01313DFD300CEA167 /* Security.framework in Frameworks */,
 				0D570FA11313DFD400CEA167 /* Cocoa.framework in Frameworks */,
 				0D570FA21313DFD400CEA167 /* PluginManager.framework in Frameworks */,
+				0D23085A133121720011B219 /* GTMOAuth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +259,7 @@
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				D15DEA4A0ABF639500CBE3A5 /* PluginManager.framework in Frameworks */,
 				0DE9C495130AF6A5001A8CE2 /* Security.framework in Frameworks */,
+				0D23085B133121720011B219 /* GTMOAuth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +283,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				0D23081613311B390011B219 /* Bundled Frameworks */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
@@ -272,23 +305,63 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		0D570F511313DD8100CEA167 /* Export Plugin */ = {
+		0D23081613311B390011B219 /* Bundled Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D230859133121720011B219 /* GTMOAuth.framework */,
+			);
+			name = "Bundled Frameworks";
+			sourceTree = "<group>";
+		};
+		0D23083113311EB10011B219 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				0D570F6E1313DE7100CEA167 /* AbstractExportPlugin.h */,
 				0D570F6F1313DE7100CEA167 /* AbstractExportPlugin.m */,
-				0D570F701313DE7100CEA167 /* SAPOFotosApertureExportPlugin.h */,
-				0D570F711313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m */,
-				0D570F721313DE7100CEA167 /* iPhotoExportPlugin.h */,
-				0D570F731313DE7100CEA167 /* iPhotoExportPlugin.m */,
 				0DE8F403131560D10039B92A /* ProgressSheetController.h */,
 				0DE8F404131560D10039B92A /* ProgressSheetController.m */,
+				0DE8FFA4131E62170039B92A /* CreateAlbumSheetController.h */,
+				0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		0D23083213311EB90011B219 /* Aperture */ = {
+			isa = PBXGroup;
+			children = (
+				0D570F701313DE7100CEA167 /* SAPOFotosApertureExportPlugin.h */,
+				0D570F711313DE7100CEA167 /* SAPOFotosApertureExportPlugin.m */,
+			);
+			name = Aperture;
+			sourceTree = "<group>";
+		};
+		0D23083313311EBE0011B219 /* iPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				0D570F721313DE7100CEA167 /* iPhotoExportPlugin.h */,
+				0D570F731313DE7100CEA167 /* iPhotoExportPlugin.m */,
+			);
+			name = iPhoto;
+			sourceTree = "<group>";
+		};
+		0D23083413311EE40011B219 /* PROTOTYPE */ = {
+			isa = PBXGroup;
+			children = (
 				0DE8F537131585000039B92A /* IPHSAPOFotosPlugin.h */,
 				0DE8F538131585000039B92A /* IPHSAPOFotosPlugin.m */,
 				0DE8F6BB1316A7090039B92A /* IPHSAPOFotosSettingsController.h */,
 				0DE8F6BC1316A7090039B92A /* IPHSAPOFotosSettingsController.m */,
-				0DE8FFA4131E62170039B92A /* CreateAlbumSheetController.h */,
-				0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */,
+			);
+			name = PROTOTYPE;
+			sourceTree = "<group>";
+		};
+		0D570F511313DD8100CEA167 /* Export Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				0D23083413311EE40011B219 /* PROTOTYPE */,
+				0D23083213311EB90011B219 /* Aperture */,
+				0D23083313311EBE0011B219 /* iPhoto */,
+				0D23083113311EB10011B219 /* Shared */,
 			);
 			name = "Export Plugin";
 			sourceTree = "<group>";
@@ -500,6 +573,7 @@
 			buildConfigurationList = 0D570F411313DD2100CEA167 /* Build configuration list for PBXNativeTarget "iPhotoExportPlugin" */;
 			buildPhases = (
 				0D570F391313DD2000CEA167 /* Resources */,
+				0D23082C13311BBB0011B219 /* Copy Frameworks */,
 				0D570F3A1313DD2000CEA167 /* Sources */,
 				0D570F3B1313DD2000CEA167 /* Frameworks */,
 			);
@@ -551,6 +625,7 @@
 			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "ApertureExportPlugin" */;
 			buildPhases = (
 				8D5B49AF048680CD000E48DA /* Resources */,
+				0D23082B13311BBB0011B219 /* Copy Frameworks */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
 			);
@@ -798,6 +873,13 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -829,6 +911,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -956,6 +1045,13 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -979,6 +1075,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
