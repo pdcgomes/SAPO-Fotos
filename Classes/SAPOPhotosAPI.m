@@ -1,5 +1,7 @@
 // Photos.m 
 
+#import <GTMOAuth/GTMOAuthAuthentication.h>
+
 #import "SAPOPhotosAPI.h"
 #import "XMLdocument.h"
 
@@ -25,7 +27,9 @@
 	[dict release];
 }
 
+
 #pragma mark -
+#pragma mark Public Methods
 
 - (NSString *) dummyEchoWithString:(NSString *)echoString
 {
@@ -78,6 +82,7 @@
 - (AlbumGetListByUserResult *) albumGetListByUserWithUser:(NSDictionary *)user page:(NSInteger)page orderBy:(NSString *)orderBy interface:(NSString *)interface
 {
 	NSString *location = @"http://services.sapo.pt/Photos";
+	
 	NSMutableArray *paramArray = [NSMutableArray array];
 	[paramArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"user", @"name",user?user:nil, @"value", nil]];
 	[paramArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"page", @"name",[NSNumber numberWithInt:page], @"value", nil]];
@@ -94,7 +99,7 @@
 	XMLelement *soapResult = [soapResponse.children lastObject];  // there should be only one
 	
 	NSArray *albums = [[soapResult getNamedChild:@"albums"] getNamedChildren:@"album"];
-	XMLelement *total	= [soapResult getNamedChild:@"result"];
+	XMLelement *total = [soapResult getNamedChild:@"result"];
 	
 	return [[[AlbumGetListByUserResult alloc] initWithAlbums:albums result:total] autorelease];
 }

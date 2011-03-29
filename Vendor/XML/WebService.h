@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GTMOAuth/GTMOAuthAuthentication.h>
 #import "XMLelement.h"
 
 @class XMLdocument;
@@ -15,9 +16,13 @@ typedef enum { SOAPVersionNone = 0, SOAPVersion1_0 = 1, SOAPVersion1_2 = 2 } SOA
 
 @interface WebService : NSObject 
 {
-	NSMutableDictionary *SOAPHeader;
-	NSMutableDictionary *SOAPHeaderNamespaces;
+	NSMutableDictionary		*SOAPHeader;
+	NSMutableDictionary		*SOAPHeaderNamespaces;
+	
+	GTMOAuthAuthentication	*auth;
 }
+
+- (void)setAuthorizer:(GTMOAuthAuthentication *)authorizer;
 
 - (NSURLRequest *) makeGETRequestWithLocation:(NSString *)url Parameters:(NSDictionary *)parameters;
 - (NSURLRequest *) makePOSTRequestWithLocation:(NSString *)url Parameters:(NSDictionary *)parameters;

@@ -12,6 +12,17 @@
 		0D23085B133121720011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
 		0D2308671331217D0011B219 /* GTMOAuth.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
 		0D2308681331217F0011B219 /* GTMOAuth.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
+		0D23089B133128610011B219 /* SAPOConnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D23089A133128610011B219 /* SAPOConnectController.m */; };
+		0D23089C133128610011B219 /* SAPOConnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D23089A133128610011B219 /* SAPOConnectController.m */; };
+		0D2308C213312DD90011B219 /* SAPOConnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D23089A133128610011B219 /* SAPOConnectController.m */; };
+		0D2308C513312DE50011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
+		0D2308C713312E050011B219 /* GTMOAuth.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
+		0D2308DF13312FF70011B219 /* GTMOAuthWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D2308DE13312FF70011B219 /* GTMOAuthWindow.xib */; };
+		0D2308E013312FF70011B219 /* GTMOAuthWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D2308DE13312FF70011B219 /* GTMOAuthWindow.xib */; };
+		0D2308E113312FF70011B219 /* GTMOAuthWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D2308DE13312FF70011B219 /* GTMOAuthWindow.xib */; };
+		0D23090E133132CA0011B219 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D23090D133132CA0011B219 /* WebKit.framework */; };
+		0D2309BA133132DE0011B219 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D23090D133132CA0011B219 /* WebKit.framework */; };
+		0D2309BB133132DE0011B219 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D23090D133132CA0011B219 /* WebKit.framework */; };
 		0D570F4C1313DD5400CEA167 /* Panel.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0D570F481313DD4700CEA167 /* Panel.nib */; };
 		0D570F6A1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
 		0D570F6B1313DE4900CEA167 /* AlbumGetListByUserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D570F691313DE4900CEA167 /* AlbumGetListByUserResult.m */; };
@@ -125,6 +136,17 @@
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0D2308CA13312E230011B219 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0D2308C713312E050011B219 /* GTMOAuth.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -133,6 +155,10 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		0D21C219131FE19D00A0B8BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ApertureExportView.xib; sourceTree = "<group>"; };
 		0D230859133121720011B219 /* GTMOAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GTMOAuth.framework; path = Frameworks/GTMOAuth.framework; sourceTree = "<group>"; };
+		0D230899133128610011B219 /* SAPOConnectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAPOConnectController.h; sourceTree = "<group>"; };
+		0D23089A133128610011B219 /* SAPOConnectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAPOConnectController.m; sourceTree = "<group>"; };
+		0D2308DE13312FF70011B219 /* GTMOAuthWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = GTMOAuthWindow.xib; path = "../../../Documents/Projects/gtm-oauth/Source/Mac/GTMOAuthWindow.xib"; sourceTree = SOURCE_ROOT; };
+		0D23090D133132CA0011B219 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		0D570F3D1313DD2000CEA167 /* SAPOFotosExporter.iPhotoExporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAPOFotosExporter.iPhotoExporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D570F3E1313DD2000CEA167 /* iPhotoExportPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPhotoExportPlugin-Info.plist"; sourceTree = "<group>"; };
 		0D570F491313DD4700CEA167 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Panel.nib; sourceTree = "<group>"; };
@@ -228,6 +254,7 @@
 				0D570FA11313DFD400CEA167 /* Cocoa.framework in Frameworks */,
 				0D570FA21313DFD400CEA167 /* PluginManager.framework in Frameworks */,
 				0D23085A133121720011B219 /* GTMOAuth.framework in Frameworks */,
+				0D2309BB133132DE0011B219 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +276,8 @@
 				0DE8F8051316C5000039B92A /* Cocoa.framework in Frameworks */,
 				0DE8F8061316C5000039B92A /* Security.framework in Frameworks */,
 				0DE8F8081316C5060039B92A /* GHUnit.framework in Frameworks */,
+				0D2308C513312DE50011B219 /* GTMOAuth.framework in Frameworks */,
+				0D23090E133132CA0011B219 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +289,7 @@
 				D15DEA4A0ABF639500CBE3A5 /* PluginManager.framework in Frameworks */,
 				0DE9C495130AF6A5001A8CE2 /* Security.framework in Frameworks */,
 				0D23085B133121720011B219 /* GTMOAuth.framework in Frameworks */,
+				0D2309BA133132DE0011B219 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +352,8 @@
 				0DE8F404131560D10039B92A /* ProgressSheetController.m */,
 				0DE8FFA4131E62170039B92A /* CreateAlbumSheetController.h */,
 				0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */,
+				0D230899133128610011B219 /* SAPOConnectController.h */,
+				0D23089A133128610011B219 /* SAPOConnectController.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -495,6 +527,7 @@
 		0DE8F57913166B9A0039B92A /* NIB */ = {
 			isa = PBXGroup;
 			children = (
+				0D2308DE13312FF70011B219 /* GTMOAuthWindow.xib */,
 				0DE8F36C131550E10039B92A /* ProgressSheet.xib */,
 				0D570F481313DD4700CEA167 /* Panel.nib */,
 				0DE8F6A61316A5E60039B92A /* IPH-SAPOFotosSettings.xib */,
@@ -521,6 +554,7 @@
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				0DE9C494130AF6A5001A8CE2 /* Security.framework */,
 				0DE8F8071316C5060039B92A /* GHUnit.framework */,
+				0D23090D133132CA0011B219 /* WebKit.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -608,6 +642,7 @@
 			buildConfigurationList = 0DE8F8031316C4F10039B92A /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
 				0DE8F7FA1316C4F00039B92A /* Resources */,
+				0D2308CA13312E230011B219 /* Copy Frameworks */,
 				0DE8F7FB1316C4F00039B92A /* Sources */,
 				0DE8F7FC1316C4F00039B92A /* Frameworks */,
 			);
@@ -676,6 +711,7 @@
 				0D570F4C1313DD5400CEA167 /* Panel.nib in Resources */,
 				0DE8F36E131550E10039B92A /* ProgressSheet.xib in Resources */,
 				0DE8FF9C131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
+				0D2308DF13312FF70011B219 /* GTMOAuthWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +730,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D2308E113312FF70011B219 /* GTMOAuthWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,6 +743,7 @@
 				0DE8F36D131550E10039B92A /* ProgressSheet.xib in Resources */,
 				0DE8FF9B131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
 				0D21C21D131FE1AA00A0B8BB /* ApertureExportView.xib in Resources */,
+				0D2308E013312FF70011B219 /* GTMOAuthWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,6 +772,7 @@
 				0DA78DAC1314077100DC6DD3 /* ExportPluginBox.m in Sources */,
 				0DE8F405131560D10039B92A /* ProgressSheetController.m in Sources */,
 				0DE8FFA6131E62170039B92A /* CreateAlbumSheetController.m in Sources */,
+				0D23089B133128610011B219 /* SAPOConnectController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,6 +816,7 @@
 				0DE8F8171316C52E0039B92A /* AlbumGetListByUserResult.m in Sources */,
 				0DE8F8231316C5660039B92A /* GHUnitTestMain.m in Sources */,
 				0DE8F8241316C5660039B92A /* PhotoUploadOperationTest.m in Sources */,
+				0D2308C213312DD90011B219 /* SAPOConnectController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -801,6 +841,7 @@
 				0DE8F406131560D10039B92A /* ProgressSheetController.m in Sources */,
 				0DE8FFA7131E62170039B92A /* CreateAlbumSheetController.m in Sources */,
 				0DE8025B131FDD2D0039B92A /* AbstractExportPlugin.m in Sources */,
+				0D23089C133128610011B219 /* SAPOConnectController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -997,6 +1038,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -1022,6 +1068,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

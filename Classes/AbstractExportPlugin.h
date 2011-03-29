@@ -18,6 +18,8 @@
 
 @class ProgressSheetController;
 @class CreateAlbumSheetController;
+@class SAPOConnectController;
+@class GTMOAuthAuthentication;
 
 @interface AbstractExportPlugin : NSObject 
 {
@@ -42,6 +44,8 @@
 
 	ProgressSheetController		*progressController;
 	CreateAlbumSheetController	*createAlbumController;
+	SAPOConnectController		*sapoConnectController;
+	GTMOAuthAuthentication		*auth;
 	
 	NSOperationQueue			*operationQueue;
 	NSMutableArray				*uploadOperations;
@@ -60,6 +64,7 @@
 @property (nonatomic, readonly) NSMutableDictionary *session;
 @property (nonatomic, readonly) NSArray *albums;
 
+- (IBAction)authButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)createAlbumButtonPressed:(id)sender;
 

@@ -20,8 +20,11 @@
 #pragma mark Main WebService Interface
 @interface SAPOPhotosAPI : WebService
 {
+
 }
 
+// use only one of the following auth methods
+// the last onde that was defined will be used
 - (void)setUsername:(NSString *)username password:(NSString *)password;
 
 - (NSString *) dummyEchoWithString:(NSString *)echoString;

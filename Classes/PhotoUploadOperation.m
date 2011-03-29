@@ -8,6 +8,7 @@
 
 #define UPLOAD_URL	@"http://fotos.sapo.pt/uploadPost.html"
 
+#import <GTMOAuth/GTMOAuthAuthentication.h>
 #import "PhotoUploadOperation.h"
 #import "SAPOPhotosAPI.h"
 #import "NSDictionary+Additions.h"
@@ -160,9 +161,11 @@
 	TRACE(@"***** REQUESTING UPLOAD TOKEN FOR <%@>... *****", [imagePath lastPathComponent]);
 	SAPOPhotosAPI *serviceClient = [[SAPOPhotosAPI alloc] init];
 	
-	NSString *username = [userInfo objectForKey:@"username"];
-	NSString *password = [userInfo objectForKey:@"password"];
-	[serviceClient setUsername:username password:password];
+	GTMOAuthAuthentication *auth = [userInfo objectForKey:@"authorizer"];
+	[serviceClient setAuthorizer:auth];
+//	NSString *username = [userInfo objectForKey:@"username"];
+//	NSString *password = [userInfo objectForKey:@"password"];
+//	[serviceClient setUsername:username password:password];
 
 	NSMutableDictionary *image = [[NSMutableDictionary alloc] init];
 	if([userInfo containsKey:@"albumID"]) {

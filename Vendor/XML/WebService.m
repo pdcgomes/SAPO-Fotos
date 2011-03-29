@@ -23,6 +23,7 @@
 {
 	[SOAPHeader release];
 	[SOAPHeaderNamespaces release];
+	[auth release];
 	[super dealloc];
 }
 
@@ -33,6 +34,15 @@
 		SOAPHeaderNamespaces = [[NSMutableDictionary alloc] init];
 	}
 	return self;
+}
+
+- (void)setAuthorizer:(GTMOAuthAuthentication *)authorizer
+{
+	if(SOAPHeader != nil || SOAPHeaderNamespaces != nil) {
+		SKSafeRelease(SOAPHeader);
+		SKSafeRelease(SOAPHeaderNamespaces);
+	}
+	auth = [authorizer retain];
 }
 
 #pragma mark Conversions
@@ -168,10 +178,14 @@
 //#endif
 	
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]] autorelease];
-	
 	[request setHTTPMethod:@"POST"];
 	[request addValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 	[request addValue:action forHTTPHeaderField:@"SOAPAction"];
+	if(auth) {
+//		[auth setShouldUseParamsToAuthorize:YES];
+		[auth setShouldUseParamsToAuthorize:NO];
+		[auth authorizeRequest:request];
+	}
 	
 	// make body
 	NSData *postBody = [NSData dataWithData:[envelope dataUsingEncoding:NSUTF8StringEncoding]];
@@ -203,7 +217,6 @@
 	else {
 		WARN(@"***** UNSUPPORTED CLASS TYPE FOR PARAMETER <%@>", parameter);
 	}
-
 }
 
 - (NSString *) returnValueFromSOAPResponse:(XMLdocument *)envelope

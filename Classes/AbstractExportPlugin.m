@@ -12,6 +12,7 @@
 #import "AlbumGetListByUserResult.h"
 #import "ProgressSheetController.h"
 #import "CreateAlbumSheetController.h"
+#import "SAPOConnectController.h"
 
 @implementation AbstractExportPlugin
 
@@ -28,6 +29,8 @@
 	
 	[progressController release];
 	[createAlbumController release];
+	[sapoConnectController release];
+	[auth release];
 	
 	[session release];
 	[albums release];
@@ -202,6 +205,7 @@
 	
 	NSDictionary *imageProperties = nil;
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  auth, @"authorizer",
 							  [usernameTextField stringValue], @"username",
 							  [passwordTextField stringValue], @"password",
 							  [selectedAlbum albumID], @"albumID",
@@ -244,6 +248,16 @@
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)authButtonPressed:(id)sender
+{
+	TRACE(@"");
+	if(!sapoConnectController) {
+		sapoConnectController = [[SAPOConnectController alloc] init];
+		[sapoConnectController setDelegate:self];
+	}
+	[sapoConnectController authorize];
+}
 
 - (void)loginButtonPressed:(id)sender
 {
@@ -327,7 +341,12 @@
 	NSBlockOperation *operation = [[NSBlockOperation alloc] init];
 	[operation addExecutionBlock:^{
 		SAPOPhotosAPI *client = [[SAPOPhotosAPI alloc] init];
-		[client setUsername:username password:password];
+		if(auth) {
+			[client setAuthorizer:auth];
+		}
+		else {
+			[client setUsername:username password:password];
+		}
 		
 		NSDictionary *createAlbumParams = [NSDictionary dictionaryWithObjectsAndKeys:
 										   SKSafeString([album objectForKey:@"albumName"]), @"title",
@@ -378,6 +397,34 @@
 }
 
 #pragma mark -
+#pragma mark SAPOConnectControllerDelegate
+
+- (void)authControllerDidStartAuth:(SAPOConnectController *)controller
+{
+	
+}
+
+- (void)authControllerDidCancelAuth:(SAPOConnectController *)controller
+{
+	
+}
+
+- (void)authController:(SAPOConnectController *)controller didFinishWithAuth:(GTMOAuthAuthentication *)theAuth
+{
+	if(auth != nil) {
+		[auth release];
+		auth = nil;
+	}
+	auth = [theAuth retain];
+	[self authenticateAndRetrieveAlbums];
+}
+
+- (void)authController:(SAPOConnectController *)controller didFailWithError:(NSError *)error
+{
+	
+}
+
+#pragma mark -
 #pragma mark Protected Methods
 
 - (void)authenticateAndRetrieveAlbums
@@ -409,7 +456,13 @@
 		[session setObject:[NSNumber numberWithBool:YES] forKey:kSession_IsAuthenticatingKey];
 		
 		SAPOPhotosAPI *client = [[SAPOPhotosAPI alloc] init];
-		[client setUsername:username password:password];
+		if(auth) {
+			[client setAuthorizer:auth];
+		}
+		else {
+			[client setUsername:username password:password];
+		}
+
 		AlbumGetListByUserResult *result = [client albumGetListByUserWithUser:nil page:0 orderBy:nil interface:nil];
 		
 		TRACE(@"Auth result: %@", result);
