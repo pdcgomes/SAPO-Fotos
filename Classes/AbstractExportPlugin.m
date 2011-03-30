@@ -206,8 +206,6 @@
 	NSDictionary *imageProperties = nil;
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  auth, @"authorizer",
-							  [usernameTextField stringValue], @"username",
-							  [passwordTextField stringValue], @"password",
 							  [selectedAlbum albumID], @"albumID",
 							  tags, @"tags",
 							  nil];
