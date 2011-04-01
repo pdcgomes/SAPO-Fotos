@@ -34,10 +34,14 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 @synthesize delegate;
 
 #pragma mark -
+#pragma mark Public class methods
+
+#pragma mark -
 #pragma mark Dealloc and Initialization
 
 - (void)dealloc
 {
+	[modalWindow release];
 	[super dealloc];
 }
 
@@ -49,6 +53,24 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 	[self performSignIn];
 }
 
+- (BOOL)authorizeFromKeychain
+{
+	GTMOAuthAuthentication *auth = [self sapoConnectAuthentication];
+	if([GTMOAuthWindowController authorizeFromKeychainForName:kKeychainServiceName authentication:auth] &&
+	   [auth canAuthorize]) {
+		if([self.delegate respondsToSelector:@selector(authController:didFinishWithAuth:)]) {
+			[self.delegate authController:self didFinishWithAuth:auth];
+		}
+		return YES;
+	}
+	return NO;
+}
+
+- (BOOL)signOut
+{
+	return [GTMOAuthWindowController removeParamsFromKeychainForName:kKeychainServiceName];
+}
+	
 #pragma mark -
 #pragma mark Private Methods
 
@@ -87,7 +109,11 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 																						   authentication:[self sapoConnectAuthentication] 
 																						   appServiceName:kKeychainServiceName 
 																						   resourceBundle:bundle] autorelease];
-		[authWindowController signInSheetModalForWindow:[NSApp modalWindow] delegate:self finishedSelector:@selector(windowController:finishedWithAuth:error:)];
+		if(!modalWindow) {
+			modalWindow = [[NSApp modalWindow] retain];
+		}
+		[authWindowController signInSheetModalForWindow:modalWindow delegate:self finishedSelector:@selector(windowController:finishedWithAuth:error:)];
+	
 		[NSApp abortModal];
 	}
 }

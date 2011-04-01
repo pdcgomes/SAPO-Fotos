@@ -63,7 +63,7 @@
 				   [NSNumber numberWithInt:0], kSession_CurrentImageKey,
 				   [NSNumber numberWithInt:0], kSession_TotalImagesKey,
 				   nil];
-		
+
 		operationQueue = [[NSOperationQueue alloc] init];
 		[operationQueue setMaxConcurrentOperationCount:5]; // TODO: define a constant 
 	}
@@ -99,6 +99,14 @@
 - (void)willBeActivated
 {
 	TRACE(@"");
+	if(!sapoConnectController) {
+		sapoConnectController = [[SAPOConnectController alloc] init];
+		[sapoConnectController setDelegate:self];
+	}
+	if(!auth) {
+		BOOL authorizedFromKeychain = [sapoConnectController authorizeFromKeychain];
+		TRACE(@"wasAuthorizedFromKeychain: %d", authorizedFromKeychain);
+	}
 }
 
 - (void)willBeDeactivated
@@ -247,7 +255,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (void)authButtonPressed:(id)sender
+- (IBAction)authButtonPressed:(id)sender
 {
 	TRACE(@"");
 	if(!sapoConnectController) {
@@ -257,7 +265,20 @@
 	[sapoConnectController authorize];
 }
 
-- (void)loginButtonPressed:(id)sender
+- (IBAction)changeAccount:(id)sender
+{
+	TRACE(@"");
+	[sapoConnectController signOut];
+	[auth release], auth = nil;
+	
+	[session setObject:[NSNumber numberWithBool:NO] forKey:kSession_IsAuthenticatedKey];
+	[self willChangeValueForKey:@"albums"];
+	[albums release], albums = nil;
+	[self didChangeValueForKey:@"albums"];
+	
+}
+
+- (IBAction)loginButtonPressed:(id)sender
 {
 	[self authenticateAndRetrieveAlbums];
 }
@@ -333,17 +354,11 @@
 
 - (BOOL)createAlbumController:(CreateAlbumSheetController *)controller requestedAlbumCreation:(NSDictionary *)album
 {
-	NSString *username = [[usernameTextField stringValue] copy];
-	NSString *password = [[passwordTextField stringValue] copy];
-	
 	NSBlockOperation *operation = [[NSBlockOperation alloc] init];
 	[operation addExecutionBlock:^{
 		SAPOPhotosAPI *client = [[SAPOPhotosAPI alloc] init];
 		if(auth) {
 			[client setAuthorizer:auth];
-		}
-		else {
-			[client setUsername:username password:password];
 		}
 		
 		NSDictionary *createAlbumParams = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -373,10 +388,7 @@
 		[client release];
 	}];
 	[operationQueue addOperation:operation];
-	
 	[operation release];
-	[username release];
-	[password release];
 	
 	return YES;
 }
@@ -409,6 +421,7 @@
 
 - (void)authController:(SAPOConnectController *)controller didFinishWithAuth:(GTMOAuthAuthentication *)theAuth
 {
+	TRACE(@"");
 	if(auth != nil) {
 		[auth release];
 		auth = nil;
@@ -427,9 +440,6 @@
 
 - (void)authenticateAndRetrieveAlbums
 {
-	NSString *username = [[usernameTextField stringValue] copy];
-	NSString *password = [[passwordTextField stringValue] copy];
-	
 	//	if(![[NSUserDefaults standardUserDefaults] boolForKey:UserDefaults_DisableKeychainUsage]) {
 	//		EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:Keychain_ServiceName withUsername:username];
 	//		if(!keychainItem) {
@@ -457,9 +467,6 @@
 		if(auth) {
 			[client setAuthorizer:auth];
 		}
-		else {
-			[client setUsername:username password:password];
-		}
 
 		AlbumGetListByUserResult *result = [client albumGetListByUserWithUser:nil page:0 orderBy:nil interface:nil];
 		
@@ -484,8 +491,6 @@
 	[operationQueue addOperation:operation];
 	
 	[operation release];
-	[username release];
-	[password release];
 }
 
 #define YES_BUTTON_INDEX 0

@@ -65,6 +65,7 @@
 @property (nonatomic, readonly) NSArray *albums;
 
 - (IBAction)authButtonPressed:(id)sender;
+- (IBAction)changeAccount:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)createAlbumButtonPressed:(id)sender;
 

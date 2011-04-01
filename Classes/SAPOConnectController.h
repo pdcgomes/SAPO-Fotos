@@ -12,11 +12,14 @@
 @interface SAPOConnectController : NSObject 
 {
 	NSObject				*delegate;
+	NSWindow				*modalWindow;
 }
 
 @property (nonatomic, assign) NSObject *delegate;
 
 - (void)authorize;
+- (BOOL)authorizeFromKeychain;
+- (BOOL)signOut;
 
 @end
 

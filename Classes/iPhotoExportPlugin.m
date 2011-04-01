@@ -96,21 +96,7 @@
 			  [[[_exportManager imageDateAtIndex:i] description] UTF8String]);
 	
 		[self exportImageWithPath:[_exportManager imagePathAtIndex:i]];
-
-//		fprintf(stream, "\nImage %d\n", (i+1));
-//		fprintf(stream, "-------------\n");
-//		fprintf(stream, "Path: %s\n", [[_exportManager imagePathAtIndex:i] UTF8String]);
-//		fprintf(stream, "Caption: %s\n", [[_exportManager imageTitleAtIndex:i] UTF8String]);
-//        fprintf(stream, "Date: %s\n", [[[_exportManager imageDateAtIndex:i] description] UTF8String]);
-		
-//		NSArray *keywords = [_exportManager imageKeywordsAtIndex:i];
-//		int j;
-//		for(j = 0; j < [keywords count]; j++) {
-//			fprintf(stream, "Keyword: %s\n", [[keywords objectAtIndex:j] UTF8String]);
-//		}
-//		fprintf(stream, "Comments: %s\n", [[_exportManager imageCommentsAtIndex:i] UTF8String]);
 	}
-	
     fclose(stream);
 }
 
