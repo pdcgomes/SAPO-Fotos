@@ -27,7 +27,7 @@
 // the last onde that was defined will be used
 - (void)setUsername:(NSString *)username password:(NSString *)password;
 
-- (NSString *) dummyEchoWithString:(NSString *)echoString;
+- (BOOL)isValidAuthorizer;
 
 - (NSDictionary *) albumCreateWithAlbum:(NSDictionary *)album;
 - (AlbumGetListByUserResult *) albumGetListByUserWithUser:(NSDictionary *)user page:(NSInteger)page orderBy:(NSString *)orderBy interface:(NSString *)interface;

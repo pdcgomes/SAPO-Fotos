@@ -31,19 +31,51 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (NSString *) dummyEchoWithString:(NSString *)echoString
+#define INVALID_SECURITY_TOKEN_FAULT_STRING @"Invalid security token"
+// Uses the dummyEcho internally to determine whether the current authorizer 
+- (BOOL)isValidAuthorizer
 {
-	NSString *location = @"http://services.sapo.pt/Photos";
+	if(auth == nil) {
+		[[NSException exceptionWithName:@"pt.sapo.macos.SAPOPhotosAPI.UndefinedAuthorizerException" reason:@"Attempted to validate an authorizer but no authorizer was defined." userInfo:nil] raise];
+	}
 	
+	NSString *location = @"http://services.sapo.pt/Photos";
+
+	NSString *echoString = @"OAuthSecurityTokenValidation";
 	NSMutableArray *paramArray = [NSMutableArray array];
 	NSDictionary *dummyEcho = [echoString length] > 0 ? [NSDictionary dictionaryWithObject:echoString forKey:@"echoStr"] : nil;
 	[paramArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"DummyEcho", @"name",dummyEcho?dummyEcho:nil, @"value", nil]];
 	NSURLRequest *request = [self makeSOAPRequestWithLocation:location Parameters:paramArray Operation:@"DummyEcho" Namespace:@"http://services.sapo.pt/definitions/Photos" Action:@"http://services.sapo.pt/definitions/Photos/DummyEcho" SOAPVersion:SOAPVersion1_0];
-	NSURLResponse *response;
-	NSError *error;
+	NSHTTPURLResponse *response = nil;
+	NSError *error = nil;
 	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+
 	XMLdocument *xml = [XMLdocument documentWithData:data];
-	return [self returnValueFromSOAPResponse:xml];
+	if([response statusCode] != 200) {
+		NSString *fault = [[[xml.documentRoot getNamedChild:@"Body"] getNamedChild:@"Fault"] getNamedChild:@"faultstring"].text;
+		if(NSNotFound != [fault rangeOfString:INVALID_SECURITY_TOKEN_FAULT_STRING options:NSCaseInsensitiveSearch].location) {
+			return NO;
+		}
+	}
+	// The only method we have to determine whether the current access token is valid or not, is to inspect the response for a given authorized operation
+	// If the response specifically states that the security token is invalid, we return a false response
+	// All other cases will return YES, even if the the service responded with an error status code (could be an indication of some other problem, unrelated to the OAuth process)
+	return YES;
+	
+//	<Body xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+//	<Fault xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+//	<faultcode>soap:Server</faultcode>
+//	<faultstring>Invalid security token</faultstring>
+//	<faultactor>http://services.sapo.pt</faultactor>
+//	<detail>
+//	<exceptionInfo xmlns="http://services.sapo.pt/exceptions">
+//	<code xmlns="http://services.sapo.pt/exceptions">2610</code>
+//	<id xmlns="http://services.sapo.pt/exceptions">15eb3e8d-d8b2-4575-bcb9-a9009cb56f26</id>
+//	<datetime xmlns="http://services.sapo.pt/exceptions">2011-04-05T14:35:48.4870214Z</datetime>
+//	</exceptionInfo>
+//	</detail>
+//	</Fault>
+//	</Body>
 }
 
 #pragma mark -
@@ -89,10 +121,16 @@
 	[paramArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"orderBy", @"name",orderBy?orderBy:@"", @"value", nil]];
 	[paramArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"interface", @"name",interface?interface:@"", @"value", nil]];
 	NSURLRequest *request = [self makeSOAPRequestWithLocation:location Parameters:paramArray Operation:@"AlbumGetListByUser" Namespace:@"http://services.sapo.pt/definitions/Photos" Action:@"http://services.sapo.pt/definitions/Photos/AlbumGetListByUser" SOAPVersion:SOAPVersion1_0];
-	NSURLResponse *response;
+	NSHTTPURLResponse *response = nil;
 	NSError *error = nil;
 	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+	TRACE(@"Response code: %d", [response statusCode]);
+	if([response statusCode] != 200) {
+		ERROR(@"");
+		return nil;
+	}
 	XMLdocument *xml = [XMLdocument documentWithData:data];
+	TRACE(@"response: %@", xml);
 	
 	XMLelement *body = [xml.documentRoot getNamedChild:@"Body"];
 	XMLelement *soapResponse = [body.children lastObject];  // there should be only one

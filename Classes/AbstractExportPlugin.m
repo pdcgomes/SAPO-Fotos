@@ -14,6 +14,12 @@
 #import "CreateAlbumSheetController.h"
 #import "SAPOConnectController.h"
 
+@interface AbstractExportPlugin(Private)
+
+- (void)alertUserOfInvalidSecurityTokenAndSignOut;
+
+@end
+
 @implementation AbstractExportPlugin
 
 @synthesize session;
@@ -26,6 +32,7 @@
 {
 	[operationQueue cancelAllOperations];
 	[uploadOperations makeObjectsPerformSelector:@selector(setDelegate:) withObject:nil];
+	[[NSAppleEventManager sharedAppleEventManager] removeEventHandlerForEventClass:kInternetEventClass andEventID:kAEGetURL];
 	
 	[progressController release];
 	[createAlbumController release];
@@ -66,8 +73,16 @@
 
 		operationQueue = [[NSOperationQueue alloc] init];
 		[operationQueue setMaxConcurrentOperationCount:5]; // TODO: define a constant 
+		
+		[[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+		// Register custom uri scheme handler
 	}
 	return self;
+}
+
+- (void)handleGetURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
+{
+	TRACE(@"%@", event);
 }
 
 - (NSView *)settingsView
@@ -361,29 +376,37 @@
 			[client setAuthorizer:auth];
 		}
 		
-		NSDictionary *createAlbumParams = [NSDictionary dictionaryWithObjectsAndKeys:
-										   SKSafeString([album objectForKey:@"albumName"]), @"title",
-										   SKSafeString([album objectForKey:@"albumDescription"]), @"description",
-										   nil];
-		NSDictionary *createdAlbum = [client albumCreateWithAlbum:createAlbumParams];
-		if(createdAlbum != nil) {
-			TRACE(@"Album creation succeeded!");
-			dispatch_sync(dispatch_get_main_queue(), ^{
-				[NSApp endSheet:controller.window];
-				[self authenticateAndRetrieveAlbums];
-			});
+		// TODO: validate the security token first
+		BOOL authSuccess = [client isValidAuthorizer];
+		if(authSuccess) {
+			NSDictionary *createAlbumParams = [NSDictionary dictionaryWithObjectsAndKeys:
+											   SKSafeString([album objectForKey:@"albumName"]), @"title",
+											   SKSafeString([album objectForKey:@"albumDescription"]), @"description",
+											   nil];
+			NSDictionary *createdAlbum = [client albumCreateWithAlbum:createAlbumParams];
+			if(createdAlbum != nil) {
+				TRACE(@"Album creation succeeded!");
+				dispatch_sync(dispatch_get_main_queue(), ^{
+					[NSApp endSheet:controller.window];
+					[self authenticateAndRetrieveAlbums];
+				});
+			}
+			else {
+				TRACE(@"Album creation failed!");
+				dispatch_sync(dispatch_get_main_queue(), ^{
+					[NSApp endSheet:controller.window];
+					NSAlert *alert = [NSAlert alertWithMessageText:@"" 
+													 defaultButton:@"OK" 
+												   alternateButton:nil 
+													   otherButton:nil 
+										 informativeTextWithFormat:@"We were unable to create the album at this time.\nPlease try again later."];
+					[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(createAlbumFailedAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+				});
+			}
 		}
 		else {
-			TRACE(@"Album creation failed!");
-			dispatch_sync(dispatch_get_main_queue(), ^{
-				[NSApp endSheet:controller.window];
-				NSAlert *alert = [NSAlert alertWithMessageText:@"" 
-												 defaultButton:@"OK" 
-											   alternateButton:nil 
-												   otherButton:nil 
-									 informativeTextWithFormat:@"We were unable to create the album at this time.\nPlease try again later."];
-				[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(createAlbumFailedAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-			});
+			WARN(@"The current security token was flagged as invalid. Alerting user and removing the current token...");
+			[self performSelectorOnMainThread:@selector(alertUserOfInvalidSecurityTokenAndSignOut) withObject:nil waitUntilDone:YES];
 		}
 		[client release];
 	}];
@@ -432,7 +455,7 @@
 
 - (void)authController:(SAPOConnectController *)controller didFailWithError:(NSError *)error
 {
-	
+	TRACE(@"");
 }
 
 #pragma mark -
@@ -440,20 +463,6 @@
 
 - (void)authenticateAndRetrieveAlbums
 {
-	//	if(![[NSUserDefaults standardUserDefaults] boolForKey:UserDefaults_DisableKeychainUsage]) {
-	//		EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:Keychain_ServiceName withUsername:username];
-	//		if(!keychainItem) {
-	//			keychainItem = [EMGenericKeychainItem addGenericKeychainItemForService:Keychain_ServiceName withUsername:username password:password];
-	//			if(!keychainItem) {
-	//				ERROR(@"Unable to store the credentials in the Keychain");
-	//			}
-	//		}
-	//		else if(![password isEqualToString:keychainItem.password]) {
-	//			keychainItem.password = password;
-	//		}
-	//	}
-	
-	
 	[self willChangeValueForKey:@"albums"];
 	[albums release], albums = nil;
 	[self didChangeValueForKey:@"albums"];
@@ -467,13 +476,13 @@
 		if(auth) {
 			[client setAuthorizer:auth];
 		}
-
-		AlbumGetListByUserResult *result = [client albumGetListByUserWithUser:nil page:0 orderBy:nil interface:nil];
 		
-		TRACE(@"Auth result: %@", result);
-		
-		BOOL authSuccess = ([result.albums count] > 0);
+		BOOL authSuccess = [client isValidAuthorizer];
 		if(authSuccess) {
+			// There's always a change that the current token is invalidated in the short time between both requests
+			// Perhaps it would be best if each authenticated operation returned an error object stating that the security token has been invalidated
+			// However this is enough for now
+			AlbumGetListByUserResult *result = [client albumGetListByUserWithUser:nil page:0 orderBy:nil interface:nil];
 			for(NSDictionary *album in result.albums) {
 				TRACE(@"Album info <ID: %@; NAME: %@>", [album albumID], [album albumName]);
 			}
@@ -481,6 +490,10 @@
 			[self willChangeValueForKey:@"albums"];
 			albums = [[NSArray arrayWithArray:result.albums] retain];
 			[self didChangeValueForKey:@"albums"];
+		}
+		else {
+			WARN(@"The current security token was flagged as invalid. Alerting user and removing the current token...");
+			[self performSelectorOnMainThread:@selector(alertUserOfInvalidSecurityTokenAndSignOut) withObject:nil waitUntilDone:YES];
 		}
 		
 		[session setObject:[NSNumber numberWithBool:authSuccess] forKey:kSession_IsAuthenticatedKey];
@@ -570,5 +583,26 @@
 		}
 	}
 }
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (void)alertUserOfInvalidSecurityTokenAndSignOut
+{
+	NSAlert *alert = [NSAlert alertWithMessageText:@"" 
+									 defaultButton:@"OK" 
+								   alternateButton:nil 
+									   otherButton:nil 
+						 informativeTextWithFormat:@"There was a problem validating your security token.\nPlease ensure the application has been authorized and try again."];
+	[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(invalidtokenAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+	
+}
+
+- (void)invalidtokenAlertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[[alert window] orderOut:self];
+	[self changeAccount:self];
+}
+
 
 @end
