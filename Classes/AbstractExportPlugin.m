@@ -299,7 +299,6 @@
 	[self willChangeValueForKey:@"albums"];
 	[albums release], albums = nil;
 	[self didChangeValueForKey:@"albums"];
-	
 }
 
 - (IBAction)loginButtonPressed:(id)sender
@@ -406,10 +405,10 @@
 				dispatch_sync(dispatch_get_main_queue(), ^{
 					[NSApp endSheet:controller.window];
 					NSAlert *alert = [NSAlert alertWithMessageText:@"" 
-													 defaultButton:@"OK" 
+													 defaultButton:NSLocalizedString(@"OK", @"")
 												   alternateButton:nil 
 													   otherButton:nil 
-										 informativeTextWithFormat:@"We were unable to create the album at this time.\nPlease try again later."];
+										 informativeTextWithFormat:NSLocalizedString(@"We were unable to create the album at this time.\nPlease try again later.", @"")];
 					[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(createAlbumFailedAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 				});
 			}
@@ -576,11 +575,11 @@
 	
 	if([failedOperations count] > 0 && !exportCanceled) {
 		TRACE(@"***** FOUND FAILED OPERATIONS. PROMPTING USER FOR ACTION...");
-		NSAlert *alert = [NSAlert alertWithMessageText:@"Warning" 
-										 defaultButton:@"No" 
-									   alternateButton:@"Yes" 
+		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Warning", @"") 
+										 defaultButton:NSLocalizedString(@"No", @"")
+									   alternateButton:NSLocalizedString(@"Yes", @"")
 										   otherButton:nil 
-							 informativeTextWithFormat:@"Some of the images could not be exported.\nWould you like to retry now?"];
+							 informativeTextWithFormat:NSLocalizedString(@"Some of the images could not be exported.\nWould you like to retry now?", @"")];
 		[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(retryAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 		return;
 	}
@@ -648,7 +647,7 @@
 - (void)alertUserOfInvalidSecurityTokenAndSignOut
 {
 	NSAlert *alert = [NSAlert alertWithMessageText:@"" 
-									 defaultButton:@"OK" 
+									 defaultButton:NSLocalizedString(@"OK", @"")
 								   alternateButton:nil 
 									   otherButton:nil 
 						 informativeTextWithFormat:NSLocalizedString(@"There was a problem validating your security token.\nPlease ensure the application has been authorized and try again.", @"")];
@@ -658,7 +657,7 @@
 - (void)alertUserOfInvalidVerificationCode
 {
 	NSAlert *alert = [NSAlert alertWithMessageText:@"" 
-									 defaultButton:@"OK" 
+									 defaultButton:NSLocalizedString(@"OK", @"")
 								   alternateButton:nil 
 									   otherButton:nil 
 						 informativeTextWithFormat:NSLocalizedString(@"The verification code you've inserted could not be verified.\nPlease try again (a new code will be provided).", @"")];

@@ -94,7 +94,6 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 																			   consumerKey:SAPOConnectConsumerKey 
 																				privateKey:SAPOConnectPrivateKey];
 	[auth setServiceProvider:SAPOConnectServiceProvider];
-//	[auth setCallback:SAPOConnectCallbackURL];
 	[auth setCallback:@"oob"];
 	[auth setShouldUseParamsToAuthorize:YES];
 	
@@ -129,11 +128,19 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 	}
 }
 
+#define RUNLOOP_ITERATIONS 2
 - (void)signIn:(GTMOAuthSignIn *)signIn shouldStartWithRequest:(NSURLRequest *)request
 {
 	TRACE(@"Opening browser to ask user for authorization: %@", request);
 	if(!request) {
-		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]; // let the network code run
+		// this is "needed" (needed in the sense that I wasn't able to make it work any other way)
+		// to ensure the inner workings of GTMOAuthSignIn that depend on GTMHTTPFetcher and a valid runloop work as expected
+		// All of the plugin code is running on a modal session owned by the iPhoto window, this is causing various glitches that I wasn't yet able to fully understand
+		// As a temporary workaround, we simply force the execution of the currentRunLoop
+		int i = 0;
+		for(i = 0; i < RUNLOOP_ITERATIONS; i++) {
+			[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]; // let the network code run
+		}
 		return;
 	}
 	
