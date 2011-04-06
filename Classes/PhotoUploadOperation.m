@@ -79,12 +79,14 @@
 }
 - (void)start
 {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	[self main];
+	[pool drain];
 }
 
 - (void)main
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	self.isExecuting = YES;
 	void (^finishOperationBlock)(BOOL) = ^(BOOL succeeded){
@@ -93,14 +95,14 @@
 		
 		if(succeeded) {
 			if([self.delegate respondsToSelector:@selector(photoUploadOperationDidFinish:)]) {
-				[self.delegate performSelectorOnMainThread:@selector(photoUploadOperationDidFinish:) withObject:self waitUntilDone:NO];
+				[self.delegate performSelectorOnMainThread:@selector(photoUploadOperationDidFinish:) withObject:self waitUntilDone:YES];
 			}
 		}
 		else {
 			[self performSelectorOnMainThread:@selector(reportError:) withObject:nil waitUntilDone:YES];
 		}
 
-		[pool release];
+//		[pool release];
 	};
 	
 	// This part runs synchronously
@@ -117,7 +119,8 @@
 	NSRunLoop *runLoop = [[NSRunLoop currentRunLoop] retain];
 	
 	while(uploading && ![self isCancelled]) {
-		[runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]];
+		[runLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:5.0]];
+//		[runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]];
 	}
 	
 	[runLoop release];
@@ -174,8 +177,8 @@
 	if([userInfo containsKey:@"tags"]) {
 		[image setObject:[userInfo objectForKey:@"tags"] forKey:@"tags"];
 	}
-	if([userInfo containsKey:@"title"]) {
-		[image setObject:[userInfo objectForKey:@"title"] forKey:@"title"];
+	if([imageProperties containsKey:@"imageTitle"]) {
+		[image setObject:[imageProperties objectForKey:@"imageTitle"] forKey:@"title"];
 	}
 	else {
 		[image setObject:@"Exported Image" forKey:@"title"];

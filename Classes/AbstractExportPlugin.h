@@ -61,6 +61,8 @@
 	
 	NSMutableDictionary			*session;
 	NSArray						*albums;
+	
+	BOOL						shouldPreselectNewlyCreatedAlbum;
 }
 
 @property (nonatomic, readonly) NSMutableDictionary *session;
@@ -83,6 +85,7 @@
 
 - (void)exportManagerShouldBeginExport;
 - (void)exportImageWithPath:(NSString *)imagePath;
+- (void)exportImageWithPath:(NSString *)imagePath metadata:(NSDictionary *)metadata;
 - (void)exportManagerDidFinishExport;
 - (void)exportManagerShouldCancelExport;
 

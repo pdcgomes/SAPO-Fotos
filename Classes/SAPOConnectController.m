@@ -126,23 +126,6 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 												   finishedSelector:@selector(signIn:finishedWithAuth:error:)];
 		[authSignIn startSigningIn];
 		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]; // let the network code run
-		return;
-		
-//		NSBundle *bundle = [NSBundle bundleWithIdentifier:@"pt.sapo.macos.iPhotoExportPlugin"];
-//		GTMOAuthWindowController *authWindowController = [[[GTMOAuthWindowController alloc] initWithScope:@"http://fotos.sapo.pt/" 
-//																								 language:@"pt" 
-//																						  requestTokenURL:[NSURL URLWithString:SAPOConnectRequestTokenURL]
-//																						authorizeTokenURL:[NSURL URLWithString:SAPOConnectAuthorizationURL]
-//																						   accessTokenURL:[NSURL URLWithString:SAPOConnectAccessTokenURL]
-//																						   authentication:[self sapoConnectAuthentication] 
-//																						   appServiceName:kKeychainServiceName 
-//																						   resourceBundle:bundle] autorelease];
-//		if(!modalWindow) {
-//			modalWindow = [[NSApp modalWindow] retain];
-//		}
-//		[authWindowController signInSheetModalForWindow:modalWindow delegate:self finishedSelector:@selector(windowController:finishedWithAuth:error:)];
-//	
-//		[NSApp abortModal];
 	}
 }
 
@@ -164,6 +147,8 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 - (void)signIn:(GTMOAuthSignIn *)signIn finishedWithAuth:(GTMOAuthAuthentication *)auth error:(NSError *)error
 {
 	TRACE(@"");
+	SKSafeRelease(signIn);
+	
 	if(!error) {
 		if(![GTMOAuthWindowController saveParamsToKeychainForName:kKeychainServiceName authentication:auth]) {
 			ERROR(@"Error while saving OAuth params to keychain.\nTODO: take proper action here...");
@@ -185,31 +170,6 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 			[self.delegate authController:self didFailWithError:error];
 		}
 	}	
-}
-
-- (void)windowController:(GTMOAuthWindowController *)windowController finishedWithAuth:(GTMOAuthAuthentication *)auth error:(NSError *)error
-{
-	if(!error) {
-		if(![GTMOAuthWindowController saveParamsToKeychainForName:kKeychainServiceName authentication:auth]) {
-			ERROR(@"Error while saving OAuth params to keychain.\nTODO: take proper action here...");
-		}
-		TRACE(@"CanAuthorize: %d", [auth canAuthorize]);
-		if([self.delegate respondsToSelector:@selector(authController:didFinishWithAuth:)]) {
-			[self.delegate authController:self didFinishWithAuth:auth];
-		}
-		return;
-	}
-	
-	if([error code] == kGTMOAuthErrorWindowClosed) {
-		if([self.delegate respondsToSelector:@selector(authControllerDidCancelAuth:)]) {
-			[self.delegate authControllerDidCancelAuth:self];
-		}
-	}
-	else {
-		if([self.delegate respondsToSelector:@selector(authController:didFailWithError:)]) {
-			[self.delegate authController:self didFailWithError:error];
-		}
-	}
 }
 
 @end

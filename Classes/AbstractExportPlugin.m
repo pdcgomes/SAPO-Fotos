@@ -20,6 +20,7 @@
 @interface AbstractExportPlugin(Private)
 
 - (void)alertUserOfInvalidSecurityTokenAndSignOut;
+- (void)alertUserOfInvalidVerificationCode;
 
 @end
 
@@ -226,16 +227,21 @@
 
 - (void)exportImageWithPath:(NSString *)imagePath
 {
+	[self exportImageWithPath:imagePath metadata:nil];
+}
+
+- (void)exportImageWithPath:(NSString *)imagePath metadata:(NSDictionary *)metadata
+{
 	NSDictionary *selectedAlbum = [[albumController arrangedObjects] objectAtIndex:[albumController selectionIndex]];
 	NSString *tags = [[tagsTokenField stringValue] copy];
 	
-	NSDictionary *imageProperties = nil;
+	TRACE(@"Selected album: <%@, ID=%@, Index: %d>", selectedAlbum, [selectedAlbum albumID], [albumController selectionIndex]);
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  auth, @"authorizer",
 							  [selectedAlbum albumID], @"albumID",
 							  tags, @"tags",
 							  nil];
-	PhotoUploadOperation *uploadOperation = [[PhotoUploadOperation alloc] initWithImagePath:imagePath imageProperties:imageProperties userInfo:userInfo];
+	PhotoUploadOperation *uploadOperation = [[PhotoUploadOperation alloc] initWithImagePath:imagePath imageProperties:metadata userInfo:userInfo];
 	[uploadOperation setDelegate:self];
 	[uploadOperations addObject:uploadOperation];
 	[operationQueue addOperation:uploadOperation];
@@ -391,6 +397,7 @@
 				TRACE(@"Album creation succeeded!");
 				dispatch_sync(dispatch_get_main_queue(), ^{
 					[NSApp endSheet:controller.window];
+					shouldPreselectNewlyCreatedAlbum = YES;
 					[self authenticateAndRetrieveAlbums];
 				});
 			}
@@ -458,7 +465,8 @@
 
 - (void)authController:(SAPOConnectController *)controller didFailWithError:(NSError *)error
 {
-	TRACE(@"");
+	TRACE(@"%@ :: %@", error, [error userInfo]);
+	[self alertUserOfInvalidVerificationCode];
 }
 
 - (void)authController:(SAPOConnectController *)controller didRequestVerificationCodeForAuth:(GTMOAuthAuthentication *)theAuth
@@ -522,13 +530,24 @@
 			// Perhaps it would be best if each authenticated operation returned an error object stating that the security token has been invalidated
 			// However this is enough for now
 			AlbumGetListByUserResult *result = [client albumGetListByUserWithUser:nil page:0 orderBy:nil interface:nil];
+			NSUInteger mostRecentAlbumID = 0;
+			NSUInteger preselectedAlbumIndex = 0;
 			for(NSDictionary *album in result.albums) {
 				TRACE(@"Album info <ID: %@; NAME: %@>", [album albumID], [album albumName]);
+				if([[album albumID] intValue] > mostRecentAlbumID) {
+					mostRecentAlbumID = [[album albumID] intValue];
+					preselectedAlbumIndex = [result.albums indexOfObject:album];
+				}
 			}
 			
 			[self willChangeValueForKey:@"albums"];
 			albums = [[NSArray arrayWithArray:result.albums] retain];
 			[self didChangeValueForKey:@"albums"];
+			
+			if(shouldPreselectNewlyCreatedAlbum) {
+				shouldPreselectNewlyCreatedAlbum = NO;
+				[albumController setSelectionIndex:preselectedAlbumIndex];
+			}
 		}
 		else {
 			WARN(@"The current security token was flagged as invalid. Alerting user and removing the current token...");
@@ -632,16 +651,24 @@
 									 defaultButton:@"OK" 
 								   alternateButton:nil 
 									   otherButton:nil 
-						 informativeTextWithFormat:@"There was a problem validating your security token.\nPlease ensure the application has been authorized and try again."];
-	[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(invalidtokenAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-	
+						 informativeTextWithFormat:NSLocalizedString(@"There was a problem validating your security token.\nPlease ensure the application has been authorized and try again.", @"")];
+	[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(invalidAuthAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];	
 }
 
-- (void)invalidtokenAlertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)alertUserOfInvalidVerificationCode
+{
+	NSAlert *alert = [NSAlert alertWithMessageText:@"" 
+									 defaultButton:@"OK" 
+								   alternateButton:nil 
+									   otherButton:nil 
+						 informativeTextWithFormat:NSLocalizedString(@"The verification code you've inserted could not be verified.\nPlease try again (a new code will be provided).", @"")];
+	[alert beginSheetModalForWindow:settingsView.window modalDelegate:self didEndSelector:@selector(invalidAuthAlertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)invalidAuthAlertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	[[alert window] orderOut:self];
 	[self changeAccount:self];
 }
-
 
 @end

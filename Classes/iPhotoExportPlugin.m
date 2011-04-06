@@ -95,7 +95,13 @@
 			  [[_exportManager imageTitleAtIndex:i] UTF8String],
 			  [[[_exportManager imageDateAtIndex:i] description] UTF8String]);
 	
-		[self exportImageWithPath:[_exportManager imagePathAtIndex:i]];
+		NSDictionary *imageMetadata = [[NSDictionary alloc] initWithObjectsAndKeys:
+									   SKSafeString([_exportManager imageTitleAtIndex:i]), @"imageTitle", // replace with constant
+									   SKSafeString([[_exportManager imageDateAtIndex:i] description]), @"imageDate", // replace with constant
+									   nil];
+		[self exportImageWithPath:[_exportManager imagePathAtIndex:i] metadata:imageMetadata];
+//		[self exportImageWithPath:[_exportManager imagePathAtIndex:i]];
+		[imageMetadata release];
 	}
     fclose(stream);
 }
