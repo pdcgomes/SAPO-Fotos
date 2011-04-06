@@ -18,6 +18,7 @@
 
 @class ProgressSheetController;
 @class CreateAlbumSheetController;
+@class OAuthVerificationCodeSheetController;
 @class SAPOConnectController;
 @class GTMOAuthAuthentication;
 
@@ -45,6 +46,7 @@
 	ProgressSheetController		*progressController;
 	CreateAlbumSheetController	*createAlbumController;
 	SAPOConnectController		*sapoConnectController;
+	OAuthVerificationCodeSheetController *verificationCodeController;
 	GTMOAuthAuthentication		*auth;
 	
 	NSOperationQueue			*operationQueue;

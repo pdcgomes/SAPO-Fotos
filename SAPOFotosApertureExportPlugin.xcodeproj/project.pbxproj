@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D164269134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D164268134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib */; };
+		0D16426A134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D164268134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib */; };
+		0D16426B134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D164268134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib */; };
+		0D16426F134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */; };
+		0D164270134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */; };
+		0D164271134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */; };
 		0D21C21D131FE1AA00A0B8BB /* ApertureExportView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */; };
 		0D23085A133121720011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
 		0D23085B133121720011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
@@ -153,6 +159,9 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		0D164264134C6B4600BA1F60 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/OAuthVerificationCodeSheet.xib; sourceTree = "<group>"; };
+		0D16426D134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthVerificationCodeSheetController.h; sourceTree = "<group>"; };
+		0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAuthVerificationCodeSheetController.m; sourceTree = "<group>"; };
 		0D21C219131FE19D00A0B8BB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ApertureExportView.xib; sourceTree = "<group>"; };
 		0D230859133121720011B219 /* GTMOAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GTMOAuth.framework; path = Frameworks/GTMOAuth.framework; sourceTree = "<group>"; };
 		0D230899133128610011B219 /* SAPOConnectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAPOConnectController.h; sourceTree = "<group>"; };
@@ -348,10 +357,12 @@
 			children = (
 				0D570F6E1313DE7100CEA167 /* AbstractExportPlugin.h */,
 				0D570F6F1313DE7100CEA167 /* AbstractExportPlugin.m */,
-				0DE8F403131560D10039B92A /* ProgressSheetController.h */,
-				0DE8F404131560D10039B92A /* ProgressSheetController.m */,
 				0DE8FFA4131E62170039B92A /* CreateAlbumSheetController.h */,
 				0DE8FFA5131E62170039B92A /* CreateAlbumSheetController.m */,
+				0D16426D134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.h */,
+				0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */,
+				0DE8F403131560D10039B92A /* ProgressSheetController.h */,
+				0DE8F404131560D10039B92A /* ProgressSheetController.m */,
 				0D230899133128610011B219 /* SAPOConnectController.h */,
 				0D23089A133128610011B219 /* SAPOConnectController.m */,
 			);
@@ -533,6 +544,7 @@
 				0DE8F6A61316A5E60039B92A /* IPH-SAPOFotosSettings.xib */,
 				0DE8FF9A131E5FD80039B92A /* CreateAlbumSheet.xib */,
 				0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */,
+				0D164268134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib */,
 			);
 			name = NIB;
 			sourceTree = "<group>";
@@ -712,6 +724,7 @@
 				0DE8F36E131550E10039B92A /* ProgressSheet.xib in Resources */,
 				0DE8FF9C131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
 				0D2308DF13312FF70011B219 /* GTMOAuthWindow.xib in Resources */,
+				0D16426A134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +744,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D2308E113312FF70011B219 /* GTMOAuthWindow.xib in Resources */,
+				0D16426B134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,6 +758,7 @@
 				0DE8FF9B131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
 				0D21C21D131FE1AA00A0B8BB /* ApertureExportView.xib in Resources */,
 				0D2308E013312FF70011B219 /* GTMOAuthWindow.xib in Resources */,
+				0D164269134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,6 +788,7 @@
 				0DE8F405131560D10039B92A /* ProgressSheetController.m in Sources */,
 				0DE8FFA6131E62170039B92A /* CreateAlbumSheetController.m in Sources */,
 				0D23089B133128610011B219 /* SAPOConnectController.m in Sources */,
+				0D164270134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,6 +833,7 @@
 				0DE8F8231316C5660039B92A /* GHUnitTestMain.m in Sources */,
 				0DE8F8241316C5660039B92A /* PhotoUploadOperationTest.m in Sources */,
 				0D2308C213312DD90011B219 /* SAPOConnectController.m in Sources */,
+				0D164271134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +859,7 @@
 				0DE8FFA7131E62170039B92A /* CreateAlbumSheetController.m in Sources */,
 				0DE8025B131FDD2D0039B92A /* AbstractExportPlugin.m in Sources */,
 				0D23089C133128610011B219 /* SAPOConnectController.m in Sources */,
+				0D16426F134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -854,6 +872,14 @@
 				089C167EFE841241C02AAC07 /* English */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0D164268134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D164264134C6B4600BA1F60 /* English */,
+			);
+			name = OAuthVerificationCodeSheet.xib;
 			sourceTree = "<group>";
 		};
 		0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */ = {

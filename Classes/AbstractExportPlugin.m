@@ -10,8 +10,11 @@
 #import "SAPOPhotosAPI.h"
 #import "PhotoUploadOperation.h"
 #import "AlbumGetListByUserResult.h"
-#import "ProgressSheetController.h"
+
 #import "CreateAlbumSheetController.h"
+#import "ProgressSheetController.h"
+#import "OAuthVerificationCodeSheetController.h"
+
 #import "SAPOConnectController.h"
 
 @interface AbstractExportPlugin(Private)
@@ -456,6 +459,42 @@
 - (void)authController:(SAPOConnectController *)controller didFailWithError:(NSError *)error
 {
 	TRACE(@"");
+}
+
+- (void)authController:(SAPOConnectController *)controller didRequestVerificationCodeForAuth:(GTMOAuthAuthentication *)theAuth
+{
+	if(auth != nil) { // not quite right, fix it later
+		[auth release];
+		auth = nil;
+	}
+	auth = [theAuth retain];
+	
+	if(verificationCodeController == nil) {
+		verificationCodeController = [[OAuthVerificationCodeSheetController alloc] initWithWindowNibName:@"OAuthVerificationCodeSheet"];
+		verificationCodeController.delegate = self;
+	}
+	[NSApp beginSheet:verificationCodeController.window modalForWindow:[settingsView window] modalDelegate:self didEndSelector:@selector(verificationCodeSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)verificationCodeSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet orderOut:self];
+	SKSafeRelease(verificationCodeController);
+}
+
+#pragma mark -
+#pragma mark OAuthVerificationCodeSheetControllerDelegate
+
+- (void)verificationCodeController:(OAuthVerificationCodeSheetController *)controller didFinishWithCode:(NSString *)verificationCode
+{
+	TRACE(@"");
+	[NSApp endSheet:controller.window];
+	[sapoConnectController setVerificationCode:verificationCode forAuth:auth];
+}
+
+- (void)verificationCodeControllerDidCancel:(OAuthVerificationCodeSheetController *)controller
+{
+	[NSApp endSheet:controller.window];
 }
 
 #pragma mark -

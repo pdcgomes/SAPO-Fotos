@@ -18,6 +18,7 @@ NSString *const SAPOConnectAccessTokenURL	= @"https://id.sapo.pt/oauth/access_to
 NSString *const SAPOConnectAuthorizationURL	= @"https://id.sapo.pt/oauth/authorize";
 NSString *const SAPOConnectAuthenticateURL	= @"https://id.sapo.pt/oauth/authenticate";
 NSString *const SAPOConnectCallbackURL		= @"http://fotos.sapo.pt/";
+//NSString *const SAPOConnectCallbackURL		= @"oob";
 
 NSString *const SAPOConnectServiceProvider	= @"SAPO Connect";
 NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
@@ -42,6 +43,7 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 - (void)dealloc
 {
 	[modalWindow release];
+	[authSignIn release];
 	[super dealloc];
 }
 
@@ -70,6 +72,18 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 {
 	return [GTMOAuthWindowController removeParamsFromKeychainForName:kKeychainServiceName];
 }
+
+- (void)setVerificationCode:(NSString *)verificationCode forAuth:(GTMOAuthAuthentication *)auth
+{
+	[auth setVerifier:verificationCode];
+	[auth setCallback:SAPOConnectCallbackURL];
+	
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:SAPOConnectCallbackURL]];
+	if([authSignIn requestRedirectedToRequest:request]) {
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]; // let the network code run
+	}
+	[request release];
+}
 	
 #pragma mark -
 #pragma mark Private Methods
@@ -80,7 +94,8 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 																			   consumerKey:SAPOConnectConsumerKey 
 																				privateKey:SAPOConnectPrivateKey];
 	[auth setServiceProvider:SAPOConnectServiceProvider];
-	[auth setCallback:SAPOConnectCallbackURL];
+//	[auth setCallback:SAPOConnectCallbackURL];
+	[auth setCallback:@"oob"];
 	[auth setShouldUseParamsToAuthorize:YES];
 	
 	return [auth autorelease];
@@ -100,22 +115,76 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 		}
 	}
 	else {
-		NSBundle *bundle = [NSBundle bundleWithIdentifier:@"pt.sapo.macos.iPhotoExportPlugin"];
-		GTMOAuthWindowController *authWindowController = [[[GTMOAuthWindowController alloc] initWithScope:@"http://fotos.sapo.pt/" 
-																								 language:@"pt" 
-																						  requestTokenURL:[NSURL URLWithString:SAPOConnectRequestTokenURL]
-																						authorizeTokenURL:[NSURL URLWithString:SAPOConnectAuthorizationURL]
-																						   accessTokenURL:[NSURL URLWithString:SAPOConnectAccessTokenURL]
-																						   authentication:[self sapoConnectAuthentication] 
-																						   appServiceName:kKeychainServiceName 
-																						   resourceBundle:bundle] autorelease];
-		if(!modalWindow) {
-			modalWindow = [[NSApp modalWindow] retain];
-		}
-		[authWindowController signInSheetModalForWindow:modalWindow delegate:self finishedSelector:@selector(windowController:finishedWithAuth:error:)];
-	
-		[NSApp abortModal];
+		GTMOAuthAuthentication *auth = [self sapoConnectAuthentication];
+		[auth setScope:@"http://fotos.sapo.pt/"];
+		authSignIn = [[GTMOAuthSignIn alloc] initWithAuthentication:auth 
+													requestTokenURL:[NSURL URLWithString:SAPOConnectRequestTokenURL] 
+												  authorizeTokenURL:[NSURL URLWithString:SAPOConnectAuthorizationURL] 
+													 accessTokenURL:[NSURL URLWithString:SAPOConnectAccessTokenURL] 
+														   delegate:self 
+												 webRequestSelector:@selector(signIn:shouldStartWithRequest:) 
+												   finishedSelector:@selector(signIn:finishedWithAuth:error:)];
+		[authSignIn startSigningIn];
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]; // let the network code run
+		return;
+		
+//		NSBundle *bundle = [NSBundle bundleWithIdentifier:@"pt.sapo.macos.iPhotoExportPlugin"];
+//		GTMOAuthWindowController *authWindowController = [[[GTMOAuthWindowController alloc] initWithScope:@"http://fotos.sapo.pt/" 
+//																								 language:@"pt" 
+//																						  requestTokenURL:[NSURL URLWithString:SAPOConnectRequestTokenURL]
+//																						authorizeTokenURL:[NSURL URLWithString:SAPOConnectAuthorizationURL]
+//																						   accessTokenURL:[NSURL URLWithString:SAPOConnectAccessTokenURL]
+//																						   authentication:[self sapoConnectAuthentication] 
+//																						   appServiceName:kKeychainServiceName 
+//																						   resourceBundle:bundle] autorelease];
+//		if(!modalWindow) {
+//			modalWindow = [[NSApp modalWindow] retain];
+//		}
+//		[authWindowController signInSheetModalForWindow:modalWindow delegate:self finishedSelector:@selector(windowController:finishedWithAuth:error:)];
+//	
+//		[NSApp abortModal];
 	}
+}
+
+- (void)signIn:(GTMOAuthSignIn *)signIn shouldStartWithRequest:(NSURLRequest *)request
+{
+	TRACE(@"Opening browser to ask user for authorization: %@", request);
+	if(!request) {
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]; // let the network code run
+		return;
+	}
+	
+	[[NSWorkspace sharedWorkspace] openURL:[request URL]];
+	
+	if([self.delegate respondsToSelector:@selector(authController:didRequestVerificationCodeForAuth:)]) {
+		[self.delegate authController:self didRequestVerificationCodeForAuth:[signIn authentication]];
+	}
+}
+
+- (void)signIn:(GTMOAuthSignIn *)signIn finishedWithAuth:(GTMOAuthAuthentication *)auth error:(NSError *)error
+{
+	TRACE(@"");
+	if(!error) {
+		if(![GTMOAuthWindowController saveParamsToKeychainForName:kKeychainServiceName authentication:auth]) {
+			ERROR(@"Error while saving OAuth params to keychain.\nTODO: take proper action here...");
+		}
+		TRACE(@"CanAuthorize: %d", [auth canAuthorize]);
+		if([self.delegate respondsToSelector:@selector(authController:didFinishWithAuth:)]) {
+			[self.delegate authController:self didFinishWithAuth:auth];
+		}
+		return;
+	}
+	
+	if([error code] == kGTMOAuthErrorWindowClosed) {
+		if([self.delegate respondsToSelector:@selector(authControllerDidCancelAuth:)]) {
+			[self.delegate authControllerDidCancelAuth:self];
+		}
+	}
+	else {
+		if([self.delegate respondsToSelector:@selector(authController:didFailWithError:)]) {
+			[self.delegate authController:self didFailWithError:error];
+		}
+	}	
 }
 
 - (void)windowController:(GTMOAuthWindowController *)windowController finishedWithAuth:(GTMOAuthAuthentication *)auth error:(NSError *)error
