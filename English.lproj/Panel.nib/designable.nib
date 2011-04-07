@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="45"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -255,6 +255,34 @@
 															<int key="NSPeriodicInterval">25</int>
 														</object>
 													</object>
+													<object class="NSImageView" id="552532903">
+														<reference key="NSNextResponder" ref="192718801"/>
+														<int key="NSvFlags">268</int>
+														<object class="NSMutableSet" key="NSDragTypes">
+															<bool key="EncodedWithXMLCoder">YES</bool>
+															<object class="NSArray" key="set.sortedObjects">
+																<bool key="EncodedWithXMLCoder">YES</bool>
+																<string>Apple PDF pasteboard type</string>
+																<string>Apple PICT pasteboard type</string>
+																<string>Apple PNG pasteboard type</string>
+																<string>NSFilenamesPboardType</string>
+																<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+																<string>NeXT TIFF v4.0 pasteboard type</string>
+															</object>
+														</object>
+														<string key="NSFrame">{{10, 14}, {75, 75}}</string>
+														<reference key="NSSuperview" ref="192718801"/>
+														<bool key="NSEnabled">YES</bool>
+														<object class="NSImageCell" key="NSCell" id="495877595">
+															<int key="NSCellFlags">130560</int>
+															<int key="NSCellFlags2">33554432</int>
+															<int key="NSAlign">0</int>
+															<int key="NSScale">0</int>
+															<int key="NSStyle">2</int>
+															<bool key="NSAnimates">NO</bool>
+														</object>
+														<bool key="NSEditable">YES</bool>
+													</object>
 												</object>
 												<string key="NSFrame">{{1, 1}, {494, 104}}</string>
 												<reference key="NSSuperview" ref="621082273"/>
@@ -416,6 +444,7 @@
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>title</string>
+					<string>coverImage</string>
 				</object>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -812,6 +841,46 @@
 					</object>
 					<int key="connectionID">170</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.coverImage</string>
+						<reference key="source" ref="552532903"/>
+						<reference key="destination" ref="1022967791"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="552532903"/>
+							<reference key="NSDestination" ref="1022967791"/>
+							<string key="NSLabel">value: selection.coverImage</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.coverImage</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">174</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">progressIndicator</string>
+						<reference key="source" ref="675537842"/>
+						<reference key="destination" ref="531620291"/>
+					</object>
+					<int key="connectionID">178</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">animate: selection.isPerformingAuthentication</string>
+						<reference key="source" ref="531620291"/>
+						<reference key="destination" ref="69121504"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="531620291"/>
+							<reference key="NSDestination" ref="69121504"/>
+							<string key="NSLabel">animate: selection.isPerformingAuthentication</string>
+							<string key="NSBinding">animate</string>
+							<string key="NSKeyPath">selection.isPerformingAuthentication</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">180</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -888,6 +957,7 @@
 							<reference ref="863538504"/>
 							<reference ref="65123079"/>
 							<reference ref="493002996"/>
+							<reference ref="552532903"/>
 						</object>
 						<reference key="parent" ref="819444646"/>
 					</object>
@@ -1049,6 +1119,20 @@
 						<reference key="object" ref="969822526"/>
 						<reference key="parent" ref="483075420"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">171</int>
+						<reference key="object" ref="552532903"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="495877595"/>
+						</object>
+						<reference key="parent" ref="621082273"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">172</int>
+						<reference key="object" ref="495877595"/>
+						<reference key="parent" ref="552532903"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1070,6 +1154,9 @@
 					<string>156.IBPluginDependency</string>
 					<string>156.IBViewBoundsToFrameTransform</string>
 					<string>157.IBPluginDependency</string>
+					<string>171.IBPluginDependency</string>
+					<string>171.IBViewBoundsToFrameTransform</string>
+					<string>172.IBPluginDependency</string>
 					<string>25.IBPluginDependency</string>
 					<string>25.IBViewBoundsToFrameTransform</string>
 					<string>26.IBPluginDependency</string>
@@ -1106,7 +1193,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>ExportPluginBox</string>
-					<string>{{1409, 667}, {496, 243}}</string>
+					<string>{{934, 902}, {496, 243}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSMutableArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1126,6 +1213,11 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABDSgAAwkQAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">AT/AAABBzAAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1189,7 +1281,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">170</int>
+			<int key="maxID">180</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1252,6 +1344,7 @@
 							<string>firstView</string>
 							<string>lastView</string>
 							<string>passwordTextField</string>
+							<string>progressIndicator</string>
 							<string>settingsView</string>
 							<string>tagsTokenField</string>
 							<string>usernameTextField</string>
@@ -1263,6 +1356,7 @@
 							<string>NSView</string>
 							<string>NSView</string>
 							<string>NSTextField</string>
+							<string>NSProgressIndicator</string>
 							<string>NSView</string>
 							<string>NSTokenField</string>
 							<string>NSTextField</string>
@@ -1277,6 +1371,7 @@
 							<string>firstView</string>
 							<string>lastView</string>
 							<string>passwordTextField</string>
+							<string>progressIndicator</string>
 							<string>settingsView</string>
 							<string>tagsTokenField</string>
 							<string>usernameTextField</string>
@@ -1302,6 +1397,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">passwordTextField</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">progressIndicator</string>
+								<string key="candidateClassName">NSProgressIndicator</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">settingsView</string>
@@ -1508,6 +1607,22 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSFormatter.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSImageCell</string>
+					<string key="superclassName">NSCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSImageCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSImageView</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSImageView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

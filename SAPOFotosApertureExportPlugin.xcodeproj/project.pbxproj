@@ -13,6 +13,7 @@
 		0D16426F134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */; };
 		0D164270134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */; };
 		0D164271134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D16426E134C6D8000BA1F60 /* OAuthVerificationCodeSheetController.m */; };
+		0D164540134DBDC600BA1F60 /* tools_org-publish_sapofotos.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 0DE8F54A131589760039B92A /* tools_org-publish_sapofotos.tiff */; };
 		0D21C21D131FE1AA00A0B8BB /* ApertureExportView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D21C21C131FE1AA00A0B8BB /* ApertureExportView.xib */; };
 		0D23085A133121720011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
 		0D23085B133121720011B219 /* GTMOAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D230859133121720011B219 /* GTMOAuth.framework */; };
@@ -725,6 +726,7 @@
 				0DE8FF9C131E5FD80039B92A /* CreateAlbumSheet.xib in Resources */,
 				0D2308DF13312FF70011B219 /* GTMOAuthWindow.xib in Resources */,
 				0D16426A134C6B4E00BA1F60 /* OAuthVerificationCodeSheet.xib in Resources */,
+				0D164540134DBDC600BA1F60 /* tools_org-publish_sapofotos.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

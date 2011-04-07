@@ -133,6 +133,11 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 {
 	TRACE(@"Opening browser to ask user for authorization: %@", request);
 	if(!request) {
+		// This branch is reached when "closeWindow" is invoked on GTMOAuthSignIn
+		// it's invoked internally by requestRedirectedToRequest:
+		// It unschedules the reachability notification and starts the fetcher to finalize the auth process
+		// Yes, these are internal implementation details of GTMOAuthSignIn, but it's necessary to expose them here to clarify mt intentions here
+		
 		// this is "needed" (needed in the sense that I wasn't able to make it work any other way)
 		// to ensure the inner workings of GTMOAuthSignIn that depend on GTMHTTPFetcher and a valid runloop work as expected
 		// All of the plugin code is running on a modal session owned by the iPhoto window, this is causing various glitches that I wasn't yet able to fully understand
@@ -180,4 +185,3 @@ NSString *const kKeychainServiceName		= @"SAPO Fotos iPhoto Export Plugin";
 }
 
 @end
-

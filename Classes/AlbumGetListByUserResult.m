@@ -79,6 +79,15 @@
 //		[album setObject:child.text forKey:SKStringWithFormat(@"%@%@", ALBUM_PROPERTY_KEY_PREFIX, child.name)];
 		[album setObject:child.text forKey:child.name];
 	}
+	
+	// Not very efficient - better replace this with just the URL reference and use a NSValueTransformer to load the image asynchronously
+	NSString *coverURLString = [album objectForKey:@"cover"];
+	NSURL *coverURL = [NSURL URLWithString:coverURLString];
+	NSImage *image = [[NSImage alloc] initWithContentsOfURL:coverURL];
+	if(image) {
+		[album setObject:image forKey:@"coverImage"];
+	}
+	[image release];
 	[albums_ addObject:album];
 	[album release];
 }
@@ -98,6 +107,7 @@
 	return [self objectForKey:@"title"];
 //	return [self objectForKey:SKStringWithFormat(@"%@%@", ALBUM_PROPERTY_KEY_PREFIX, @"title")];
 }
+
 
 @end
 

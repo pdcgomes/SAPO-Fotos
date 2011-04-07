@@ -77,16 +77,11 @@
 
 		operationQueue = [[NSOperationQueue alloc] init];
 		[operationQueue setMaxConcurrentOperationCount:5]; // TODO: define a constant 
-		
-		[[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(handleGetURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
-		// Register custom uri scheme handler
+
+		[progressIndicator setUsesThreadedAnimation:YES];
+		[progressIndicator startAnimation:self];
 	}
 	return self;
-}
-
-- (void)handleGetURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
-{
-	TRACE(@"%@", event);
 }
 
 - (NSView *)settingsView
@@ -668,6 +663,20 @@
 {
 	[[alert window] orderOut:self];
 	[self changeAccount:self];
+}
+
+#pragma mark -
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	if([keyPath isEqualToString:@""]) {
+		TRACE(@"SELECTED INDEX CHANGED!!!");
+	}
+	else {
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
+
 }
 
 @end

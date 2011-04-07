@@ -37,6 +37,7 @@
 	
 	IBOutlet NSTextField		*usernameTextField;
 	IBOutlet NSTextField		*passwordTextField;
+	IBOutlet NSProgressIndicator*progressIndicator;
 	
 	IBOutlet NSPopUpButton		*albumsPopUpButton;
 	IBOutlet NSTokenField		*tagsTokenField;
